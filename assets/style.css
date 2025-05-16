@@ -147,7 +147,7 @@ body.login-transition {
   }
 
  .body {
-   height: 80%;
+   height: auto;
  } 
   
   .card {
