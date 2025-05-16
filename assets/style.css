@@ -146,7 +146,7 @@ body.login-transition {
 @media only screen and (max-width: 600px) {
   .form-container {
     width: 400px;
-    height: auto;
+    height: 100%;
     max-height: none;
   }
 
@@ -168,7 +168,7 @@ body.login-transition {
 @media only screen and (max-width: 900px) {
   .form-container {
     width: 400px;
-    height: auto;
+    height: 100%;
     max-height: none;
   }
 
@@ -186,6 +186,7 @@ body.login-transition {
 @media only screen and (min-width: 1200px) {
   .form-container {
     width: 400px;
+    height: 100%;
   }
 
   .card h2 {
