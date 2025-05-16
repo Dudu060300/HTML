@@ -123,20 +123,6 @@ button:focus, input:focus {
   outline-offset: 2px;
 }
 
-@media (max-width: 480px) {
-  .form-container {
-    width: 50%;
-    height: 550px;
-  }
-
-  .card {
-    padding: 20px;
-  }
-
-  .card h2 {
-    font-size: 1.5rem;
-  }
-}
 
 /* Transizione 3D in uscita */
 body.login-transition {
