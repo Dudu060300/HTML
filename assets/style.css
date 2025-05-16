@@ -5,7 +5,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: auto;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
@@ -13,8 +15,9 @@ body {
 }
 
 .form-container {
-  width: 400px;
-  height: 500px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
   position: relative;
   transition: transform 0.8s;
   transform-style: preserve-3d;
@@ -27,7 +30,8 @@ body {
 .card {
   position: absolute;
   width: 100%;
-  height: 100%;
+  min-height:100%;
+  height: auto;
   backface-visibility: hidden;
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
@@ -142,19 +146,14 @@ body.login-transition {
 
 /* Media Queries for Responsiveness */
 
-/* For small screens (phones) */
-@media only screen and (max-width: 600px) {
- /* For small screens (phones) */
 @media only screen and (max-width: 600px) {
   .form-container {
     width: 90%;
     height: auto;
-    max-height: none;
   }
 
   .card {
     padding: 20px;
-    font-size: 0.9rem;
   }
 
   input, button {
@@ -164,72 +163,5 @@ body.login-transition {
 
   .card h2 {
     font-size: 1.5rem;
-  }
-}
-
-
-/* For medium screens (tablets) */
-@media only screen and (max-width: 900px) {
-  .card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  padding: 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
-}
-
-  .form-container {
-    width: 400px;
-    height: 100%;
-    max-height: none;
-  }
-
-  input, button {
-    font-size: 1rem;
-    padding: 12px;
-  }
-
-  .card h2 {
-    font-size: 1.8rem;
-  }
-}
-
-/* For large screens (desktops, large monitors) */
-@media only screen and (min-width: 1200px) {
-  .card {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-  border-radius: 20px;
-  padding: 40px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: white;
-}
-
-  .form-container {
-    width: 400px;
-    height: 100%;
-  }
-
-  .card h2 {
-    font-size: 2.5rem;
-  }
-
-  input, button {
-    font-size: 1.2rem;
   }
 }
