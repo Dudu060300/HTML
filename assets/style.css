@@ -144,6 +144,22 @@ body.login-transition {
 
 /* For small screens (phones) */
 @media only screen and (max-width: 600px) {
+  .card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
   .form-container {
     width: 400px;
     height: 100%;
@@ -166,6 +182,22 @@ body.login-transition {
 
 /* For medium screens (tablets) */
 @media only screen and (max-width: 900px) {
+  .card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
   .form-container {
     width: 400px;
     height: 100%;
@@ -184,6 +216,22 @@ body.login-transition {
 
 /* For large screens (desktops, large monitors) */
 @media only screen and (min-width: 1200px) {
+  .card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: white;
+}
+
   .form-container {
     width: 400px;
     height: 100%;
