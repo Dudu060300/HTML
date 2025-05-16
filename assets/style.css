@@ -146,6 +146,10 @@ body.login-transition {
     height: auto;
   }
 
+ .body {
+   height: 80%;
+ } 
+  
   .card {
     padding: 20px;
   }
