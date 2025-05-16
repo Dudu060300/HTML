@@ -5,7 +5,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: auto;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
@@ -13,8 +15,10 @@ body {
 }
 
 .form-container {
-  width: 400px;
-  height: 500px;
+  width: 90%;
+  max-width: 400px;
+  height: 90vh;
+  max-height: 500px;
   position: relative;
   transition: transform 0.8s;
   transform-style: preserve-3d;
