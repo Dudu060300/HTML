@@ -143,7 +143,6 @@ body.login-transition {
 
 @media (max-width: 480px) {
   .form-container {
-    width: 10%;
     height: 550px;
   }
 
