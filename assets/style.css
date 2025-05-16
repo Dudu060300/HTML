@@ -125,7 +125,7 @@ button:focus, input:focus {
 
 @media (max-width: 480px) {
   .form-container {
-    width: 90%;
+    width: 50%;
     height: 550px;
   }
 
