@@ -143,12 +143,7 @@ body.login-transition {
 
 
 @media (max-width: 600px) {
-  body {
-    flex-direction: column;
-    padding: 20px;
-    height: auto;
-  }
-
+  
   .form-container {
     width: 90%;
     height: auto;
