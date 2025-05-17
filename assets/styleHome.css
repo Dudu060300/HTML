@@ -352,6 +352,10 @@
   text-align: left;
   }
 
+  form imput {
+  text-align: left;
+  }
+
   .username-group {
   display: flex;
   flex-direction: column;
