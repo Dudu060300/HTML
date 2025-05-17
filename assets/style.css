@@ -153,7 +153,8 @@ body.login-transition {
   
   body, html {
     overflow-x:hidden;
-    height:80vh;
+    height:90vh;
+    padding:20px;
   }
   
 }
