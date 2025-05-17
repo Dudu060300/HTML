@@ -362,7 +362,7 @@
   gap: 10px;
   }
 
-  label {
+  label, input {
     text-align: left;
     margin-bottom: 5px;
   }
