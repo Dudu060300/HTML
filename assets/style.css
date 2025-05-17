@@ -147,11 +147,10 @@ body.login-transition {
   
   .card, .form-container{
     padding:20px;
-    height:90%;
   }
   
   body, html {
-    height:70%;
+    height:10%;
     overflow-x:hidden;
   }
    }
