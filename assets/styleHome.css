@@ -347,6 +347,12 @@
     flex-direction: column;
   }
 
+  .username-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  }
+
   label {
     text-align: left;
     margin-bottom: 5px;
