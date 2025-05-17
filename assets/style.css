@@ -143,10 +143,10 @@ body.login-transition {
 }
 
 /* Media Queries for Responsiveness */
-@media only screen and (max-height: 800px) {
+@media only screen and (max-height: 2500px) {
   
-  html, body {
-    overflow-x: hidden;
-    height:100%;
+  .form, .card{
+    width:80%;
+  }
   }
    }
