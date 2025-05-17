@@ -146,7 +146,8 @@ body.login-transition {
 @media only screen and (max-height: 2500px) {
   
   .form-container{
-    height:90vh;
+    height:60vh;
+    width: 80vw;
     
   }
   
