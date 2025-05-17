@@ -146,12 +146,12 @@ body.login-transition {
 @media only screen and (max-height: 2500px) {
   
   .form-container{
-    height:100vh;
+    height:90vh;
+    
   }
   
   body, html {
     overflow-x:hidden;
-    height: 100vh;
   }
   
 }
