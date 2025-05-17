@@ -146,12 +146,13 @@ body.login-transition {
 @media only screen and (max-height: 2500px) {
   
   .card{
-    width:80%;
+    width:90%;
     padding:20px;
+    height:90%;
   }
   
   body, html {
-    width:80%;
+    height:90%;
     overflow-x:hidden;
   }
    }
