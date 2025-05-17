@@ -366,6 +366,7 @@
   .old-password-group {
     flex-direction: column;
     align-items: stretch;
+    text-align: left;
   }
 
   #verifyPasswordBtn, 
