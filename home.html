@@ -46,33 +46,37 @@
       <form id="profileForm" novalidate>
         
         <!-- EMAIL -->
+        <div class="form-group">
         <label for="emailInput">Email</label>
         <input type="email" id="emailInput" readonly aria-readonly="true" />
+        </div>
 
         <!-- USERNAME + BOTTONE -->
+        <div class="form-group">
         <label for="usernameInput">Username</label>
-        <div class= "username-group" style="display: flex; gap: 8px; align-items: center;">
           <input type="text" id="usernameInput" required class="full-width" />
           <button type="button" id="changeUsernameBtn">Cambia username</button>
         </div>
 
         <!-- VECCHIA PASSWORD + BOTTONE -->
+        <div class="form-group">
         <label for="oldPasswordInput" id="oldPasswordLabel">Vecchia Password</label>
-        <div class="old-password-group">
           <input type="password" id="oldPasswordInput" placeholder="Inserisci vecchia password" autocomplete="current-password" />
           <button type="button" id="verifyPasswordBtn" aria-describedby="oldPasswordLabel">Verifica</button>
         </div>
 
 
         <!-- NUOVA PASSWORD -->
+        <div class="form-group">
         <label for="newPasswordInput" id="newPasswordLabel" class="hidden">Nuova Password</label>
         <input type="password" id="newPasswordInput" placeholder="Nuova password" class="hidden" autocomplete="new-password" />
-
+        </div>
 
         <!-- CONFERMA NUOVA PASSWORD -->
+        <div class="form-group">
         <label for="confirmPasswordInput" id="confirmPasswordLabel" class="hidden">Conferma Nuova Password</label>
         <input type="password" id="confirmPasswordInput" placeholder="Conferma nuova password" class="hidden" autocomplete="new-password" />
-
+        </div>
 
         <!-- MESSAGGI DI SUCCESSO O ERRORE -->
         <div id="errorMsg" role="alert" aria-live="assertive"></div>
