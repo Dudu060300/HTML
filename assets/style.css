@@ -13,8 +13,7 @@ body {
 }
 
 .form-container {
-  width: 100%;
-  max-width: 400px;
+  width: 400px;
   height: auto;
   position: relative;
   transition: transform 0.8s;
@@ -144,10 +143,7 @@ body.login-transition {
 /* Media Queries for Responsiveness */
 
 @media only screen and (max-width: 600px) {
-  .form-container {
-    height: auto;
-  }
-
+  
   .card {
     padding: 20px;
   }
