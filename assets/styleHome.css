@@ -343,7 +343,7 @@
 
 @media (max-width: 600px) {
   form {
-  align-items: flex-start;
+  display: flex;
   }
 
   form label {
