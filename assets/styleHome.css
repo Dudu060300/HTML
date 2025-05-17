@@ -411,8 +411,8 @@
 
   #closePopupBtn {
     position: absolute;
-    top: -15px;
-    right: 3px;
+    top: -25px;
+    right: -13px;
     background: none;
     border: none;
     font-size: 1.6rem;
