@@ -145,9 +145,13 @@ body.login-transition {
 /* Media Queries for Responsiveness */
 @media only screen and (max-height: 2500px) {
   
-  .form-container, .card{
+  .card{
     width:80%;
     padding:20px;
   }
+  
+  body, html {
+    width:80%;
+    overflow-x:hidden;
   }
    }
