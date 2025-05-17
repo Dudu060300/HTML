@@ -5,7 +5,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   padding: 20px;
   box-sizing: border-box;
 }
@@ -151,5 +151,10 @@ body.login-transition {
   
   body, html {
     overflow-y:hidden;
+    overflow-x:hidden;
+    height: 70%;
   }
+  
+  .container{
+    padding:20;
    }
