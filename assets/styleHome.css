@@ -369,6 +369,25 @@
     margin-bottom: 10px;
   }
 
+.username-group, .old-password-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .username-group label, .old-password-group label {
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+   .username-group input, .old-password-group input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
   #changeUsernameBtn,
   #verifyPasswordBtn,
   button[type="submit"] {
