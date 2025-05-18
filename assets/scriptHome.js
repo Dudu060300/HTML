@@ -377,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   const themeToggle = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
 
   // Inizializza toggle in base al tema corrente
   themeToggle.checked = document.body.classList.contains('dark');
@@ -393,7 +394,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Cambia tema al toggle
-  themeToggle.addEventListener('change', (e) => {
-    updateTheme(e.target.checked);
+  themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+      // Attiva dark mode
+      document.body.classList.add('dark');
+      themeLabel.textContent = 'Dark mode attiva';
+      themeToggle.setAttribute('aria-checked', 'true');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      // Attiva light mode
+      document.body.classList.remove('dark');
+      themeLabel.textContent = 'Light mode attiva';
+      themeToggle.setAttribute('aria-checked', 'false');
+      localStorage.setItem('theme', 'light');
+    }
   });
 });
