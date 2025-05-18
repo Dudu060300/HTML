@@ -439,6 +439,10 @@
     flex-direction: column;
   }
 
+  form-group {
+    flex-direction: column;
+}
+
   .username-group, .old-password-group {
     flex-direction: column;
     }
