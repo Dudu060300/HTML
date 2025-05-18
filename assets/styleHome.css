@@ -488,7 +488,12 @@
   form {
     grid-template-columns: 1fr;
     gap: 14px;
+    flex-direction: column;
   }
+
+  .username-group, .old-password-group {
+    flex-direction: column;
+    }
 
   #profilePopup {
     width: 95vw;
