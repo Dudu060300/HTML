@@ -1,6 +1,4 @@
 :root {
-  --bg-color: #ffffff;
-  --text-color: #000000;
   --main-bg: #ffffff;
   --nav-bg: #222;
   --accent-color: #00f7ff;
@@ -14,7 +12,6 @@
 }
 
 body.dark {
-  --bg-color: #121212;
   --main-bg: #121212
   --text-color: #ffffff;
 }
