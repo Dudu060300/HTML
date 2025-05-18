@@ -174,9 +174,10 @@
     #barra {
       position: relative;
       margin-bottom: 20px;
-      border-bottom: solid;
+      border: solid;
+      border-radius: 20px;
+      padding: 10px;
       text-align: center;
-      padding-bottom: 10px;
     }
 
     #barra h3 {
@@ -443,7 +444,6 @@
   .form-group label,
   .username-group label,
   .old-password-group label {
-    margin-bottom: 6px;
     font-weight: 600;
     width: 25%;
     text-align: left;
