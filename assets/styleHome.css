@@ -518,18 +518,13 @@
   }
 
   #changeUsernameBtn,
-  #verifyPasswordBtn,
-  button[type="submit"] {
+  #verifyPasswordBtn{
     width: 30%;
     margin-top: 0;
   }
-
-  #changeUsernameBtn {
-    margin-bottom: 0px;
-  }
-
-  #verifyPasswordBtn {
-    margin-bottom: 0px;
+   
+  button[type="submit"] {
+    width: 100%;
   }
   
   #profilePopup {
