@@ -424,7 +424,7 @@
   }
 }
 
-  @media (min-width: 601px) and screen and (max-width: 2560px) and (orientation: landscape) {
+  @media (min-width: 601px) and (orientation: landscape) {
   form {
     display: flex;
     flex-direction: column;
