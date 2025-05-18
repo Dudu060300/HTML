@@ -221,6 +221,7 @@
     .old-password-group {
       display: flex;
       flex-direction: column;
+      align-items: anchor-center;
       gap: 5px;
       width: 100%;
   }
