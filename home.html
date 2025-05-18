@@ -22,26 +22,8 @@
         <span class="arrow" aria-hidden="true">&#9662;</span>
         <div class="dropdown" id="dropdownMenu" role="menu" aria-label="Menu opzioni utente">
           <a href="#" id="editProfile" role="menuitem" tabindex="-1">Modifica profilo</a>
+          <a href="#" id="openSettings" role="menuitem" tabindex="-1">Impostazioni</a>
           <a href="" id="logout" role="menuitem" tabindex="-1">Logout</a>
-        <!-- POPUP IMPOSTAZIONI -->
-<div id="settingsOverlay" tabindex="-1" class="hidden"></div>
-<div id="settingsPopup" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1" class="hidden">
-  <button id="closeSettingsBtn" title="Chiudi" aria-label="Chiudi popup impostazioni" style="height: 20px;width: 20px;top: 5px;right: 5px;">×</button>
-
-  <div id="barra">
-    <h3 id="settingsTitle">Impostazioni</h3>
-  </div>
-
-  <form>
-    <div class="form-group">
-      <label for="themeSelect">Tema</label>
-      <select id="themeSelect">
-        <option value="light">Chiaro</option>
-        <option value="dark">Scuro</option>
-      </select>
-    </div>
-  </form>
-</div>
         </div>
       </div>
     </nav>
@@ -110,7 +92,23 @@
       </form>
     </div>
 
-
+<!-- POPUP IMPOSTAZIONI -->
+<div id="settingsOverlay" tabindex="-1" class="hidden"></div>
+<div id="settingsPopup" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" tabindex="-1" class="hidden">
+  <button id="closeSettingsBtn" title="Chiudi" aria-label="Chiudi popup impostazioni" style="height: 20px;width: 20px;top: 5px;right: 5px;">×</button>
+  <div id="barra">
+    <h3 id="settingsTitle">Impostazioni</h3>
+  </div>
+  <form>
+    <div class="form-group">
+      <label for="themeSelect">Tema</label>
+      <select id="themeSelect">
+        <option value="light">Chiaro</option>
+        <option value="dark">Scuro</option>
+      </select>
+    </div>
+  </form>
+</div>
     <!-- SCRIPT -->
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
