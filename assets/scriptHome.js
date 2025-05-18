@@ -325,14 +325,16 @@ function loadThemeSetting() {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
+    document.body.classList.toggle('dark', savedTheme === 'dark'); // aggiunto
     const themeSelect = document.getElementById('themeSelect');
-    if(themeSelect) themeSelect.value = savedTheme;
+    if (themeSelect) themeSelect.value = savedTheme;
   }
 }
 
 function saveThemeSetting(theme) {
   localStorage.setItem('theme', theme);
   document.documentElement.setAttribute('data-theme', theme);
+  document.body.classList.toggle('dark', theme === 'dark'); // aggiunto
 }
 
 document.addEventListener('DOMContentLoaded', () => {
