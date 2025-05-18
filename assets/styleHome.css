@@ -430,4 +430,58 @@
     padding: 25px 20px;
   }
 }
+
+  @media (min-width: 601px) and (max-width: 1024px) {
+  /* Form a colonna singola per maggiore leggibilità */
+  form {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  label {
+    text-align: left;
+    font-size: 1rem;
+  }
+
+  input {
+    font-size: 1rem;
+  }
+
+  button,
+  #changeUsernameBtn,
+  #verifyPasswordBtn {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  #profilePopup {
+    width: 90vw;
+    padding: 30px 25px;
+  }
+
+  #barra h3 {
+    font-size: 1.6rem;
+  }
+
+  nav h1 {
+    font-size: 1.3rem;
+  }
+
+  .user-name {
+    font-size: 0.95rem;
+  }
+
+  .user-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  /* Ridimensiona dropdown */
+  .dropdown a {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+}
+
 }
