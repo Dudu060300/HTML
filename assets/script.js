@@ -9,6 +9,8 @@ const firebaseConfig = {
   measurementId: "G-Z1TKBCDZ0E"
 };
 
+const db = firebase.firestore();
+
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
@@ -19,20 +21,42 @@ function flipCard() {
 
 // Login con email/password
 function login() {
-  const email = document.getElementById("loginEmail").value;
+  const input = document.getElementById("loginEmail").value;
   const password = document.getElementById("loginPassword").value;
 
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-      // Applica classe animazione
-      document.body.classList.add('login-transition');
+  if (input.includes("@")) {
+    // È un'email
+    auth.signInWithEmailAndPassword(input, password)
+      .then(() => {
+        document.body.classList.add('login-transition');
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 800);
+      })
+      .catch(err => alert(err.message));
+  } else {
+    // È un username → recupera l'email da Firestore
+    db.collection("users")
+      .where("username", "==", input)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          throw new Error("Username non trovato.");
+        }
 
-      // Attendi che l'animazione finisca (800ms) prima del redirect
-      setTimeout(() => {
-        window.location.href = "home.html";
-      }, 800);
-    })
-    .catch(err => alert(err.message));
+        const userData = snapshot.docs[0].data();
+        const email = userData.email;
+
+        return auth.signInWithEmailAndPassword(email, password);
+      })
+      .then(() => {
+        document.body.classList.add('login-transition');
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 800);
+      })
+      .catch(err => alert("Errore: " + err.message));
+  }
 }
 
 // Registrazione con salvataggio del nome utente
@@ -41,17 +65,24 @@ function register() {
   const password = document.getElementById("regPassword").value;
   const username = document.getElementById('regName').value;
 
-  firebase.auth().createUserWithEmailAndPassword(email, password)
+  auth.createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      return user.updateProfile({
-        displayName: username
-      }).then(() => {
-        document.body.classList.add('login-transition');
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 800);
+
+      // Aggiorna il displayName
+      return user.updateProfile({ displayName: username }).then(() => {
+        // Salva lo username in Firestore
+        return db.collection("users").doc(user.uid).set({
+          username: username,
+          email: email
+        });
       });
+    })
+    .then(() => {
+      document.body.classList.add('login-transition');
+      setTimeout(() => {
+        window.location.href = "home.html";
+      }, 800);
     })
     .catch((error) => {
       alert("Errore registrazione: " + error.message);
