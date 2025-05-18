@@ -319,26 +319,28 @@ changeUsernameBtn.addEventListener('click', async () => {
   }, 1000);
 });
 
-// --- Settings popup and theme management ---
+
+  // Funzioni globali per tema
+function loadThemeSetting() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    const themeSelect = document.getElementById('themeSelect');
+    if(themeSelect) themeSelect.value = savedTheme;
+  }
+}
+
+function saveThemeSetting(theme) {
+  localStorage.setItem('theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const settingsBtn = document.getElementById('openSettings');
   const settingsPopup = document.getElementById('settingsPopup');
   const settingsOverlay = document.getElementById('settingsOverlay');
   const closeSettingsBtn = document.getElementById('closeSettingsBtn');
   const themeSelect = document.getElementById('themeSelect');
-
-  function loadThemeSetting() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      if(themeSelect) themeSelect.value = savedTheme;
-    }
-  }
-
-  function saveThemeSetting(theme) {
-    localStorage.setItem('theme', theme);
-    document.documentElement.setAttribute('data-theme', theme);
-  }
 
   if (settingsBtn && settingsPopup && settingsOverlay) {
     settingsBtn.addEventListener('click', (e) => {
