@@ -126,3 +126,45 @@ function appleLogin() {
       register(); // chiama la funzione register()
     }
   });
+
+// Elementi
+const settingsBtn = document.getElementById('openSettings');
+const settingsPopup = document.getElementById('settingsPopup');
+const settingsOverlay = document.getElementById('settingsOverlay');
+const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+const themeSelect = document.getElementById('themeSelect');
+
+// Apri popup impostazioni
+settingsBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  loadThemeSetting();
+  settingsOverlay.classList.remove('hidden');
+  settingsPopup.classList.remove('hidden');
+  settingsPopup.focus();
+});
+
+// Chiudi popup
+function closeSettingsPopup() {
+  settingsOverlay.classList.add('hidden');
+  settingsPopup.classList.add('hidden');
+}
+
+closeSettingsBtn.addEventListener('click', closeSettingsPopup);
+settingsOverlay.addEventListener('click', closeSettingsPopup);
+
+// Cambia tema
+themeSelect.addEventListener('change', () => {
+  const selectedTheme = themeSelect.value;
+  document.body.classList.toggle('dark', selectedTheme === 'dark');
+  localStorage.setItem('preferredTheme', selectedTheme);
+});
+
+// Carica tema salvato
+function loadThemeSetting() {
+  const savedTheme = localStorage.getItem('preferredTheme') || 'light';
+  themeSelect.value = savedTheme;
+  document.body.classList.toggle('dark', savedTheme === 'dark');
+}
+
+// Applica all'avvio
+window.addEventListener('DOMContentLoaded', loadThemeSetting);
