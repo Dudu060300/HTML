@@ -374,3 +374,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loadThemeSetting();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggle = document.getElementById('themeToggle');
+
+  // Inizializza toggle in base al tema corrente
+  themeToggle.checked = document.body.classList.contains('dark');
+
+  // Funzione per aggiornare il tema
+  function updateTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark');
+      themeToggle.setAttribute('aria-checked', 'true');
+    } else {
+      document.body.classList.remove('dark');
+      themeToggle.setAttribute('aria-checked', 'false');
+    }
+  }
+
+  // Cambia tema al toggle
+  themeToggle.addEventListener('change', (e) => {
+    updateTheme(e.target.checked);
+  });
+});
