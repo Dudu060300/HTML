@@ -345,43 +345,54 @@ db.collection('users').doc(user.uid).get().then(doc => {
 
 
 // Elementi
-const settingsBtn = document.getElementById('openSettings');
-const settingsPopup = document.getElementById('settingsPopup');
-const settingsOverlay = document.getElementById('settingsOverlay');
-const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-const themeSelect = document.getElementById('themeSelect');
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsBtn = document.getElementById('openSettings');
+  const settingsPopup = document.getElementById('settingsPopup');
+  const settingsOverlay = document.getElementById('settingsOverlay');
+  const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+  const themeSelect = document.getElementById('themeSelect');
 
-// Apri popup impostazioni
-settingsBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+  function loadThemeSetting() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      themeSelect.value = savedTheme;
+    }
+  }
+
+  function saveThemeSetting(theme) {
+    localStorage.setItem('theme', theme);
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+
+  if (settingsBtn && settingsPopup && settingsOverlay) {
+    settingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadThemeSetting();
+      settingsOverlay.classList.remove('hidden');
+      settingsPopup.classList.remove('hidden');
+      settingsPopup.focus();
+    });
+  }
+
+  if (closeSettingsBtn && settingsPopup && settingsOverlay) {
+    closeSettingsBtn.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');
+      settingsPopup.classList.add('hidden');
+    });
+
+    settingsOverlay.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');
+      settingsPopup.classList.add('hidden');
+    });
+  }
+
+  if (themeSelect) {
+    themeSelect.addEventListener('change', () => {
+      saveThemeSetting(themeSelect.value);
+    });
+  }
+
+  // Imposta il tema all'avvio
   loadThemeSetting();
-  settingsOverlay.classList.remove('hidden');
-  settingsPopup.classList.remove('hidden');
-  settingsPopup.focus();
 });
-
-// Chiudi popup
-function closeSettingsPopup() {
-  settingsOverlay.classList.add('hidden');
-  settingsPopup.classList.add('hidden');
-}
-
-closeSettingsBtn.addEventListener('click', closeSettingsPopup);
-settingsOverlay.addEventListener('click', closeSettingsPopup);
-
-// Cambia tema
-themeSelect.addEventListener('change', () => {
-  const selectedTheme = themeSelect.value;
-  document.body.classList.toggle('dark', selectedTheme === 'dark');
-  localStorage.setItem('preferredTheme', selectedTheme);
-});
-
-// Carica tema salvato
-function loadThemeSetting() {
-  const savedTheme = localStorage.getItem('preferredTheme') || 'light';
-  themeSelect.value = savedTheme;
-  document.body.classList.toggle('dark', savedTheme === 'dark');
-}
-
-// Applica all'avvio
-window.addEventListener('DOMContentLoaded', loadThemeSetting);
