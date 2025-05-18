@@ -9,9 +9,8 @@ const firebaseConfig = {
   measurementId: "G-Z1TKBCDZ0E"
 };
 
-const db = firebase.firestore();
-
 firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 const auth = firebase.auth();
 
 // Animazione flip
