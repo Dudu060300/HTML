@@ -362,7 +362,7 @@
   .form-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: anchor-center;
     width: 100%;
   }
 
@@ -381,7 +381,7 @@
 .username-group, .old-password-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: anchor-center;
     width: 100%;
   }
 
