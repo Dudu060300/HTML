@@ -181,12 +181,13 @@ verifyPasswordBtn.addEventListener('click', () => {
 
   user.reauthenticateWithCredential(credential)
     .then(() => {
-       setTimeout(() => {
       showSuccess('Password vecchia verificata. Inserisci la nuova password.');
        }, 2000);
       oldPasswordInput.closest('.old-password-group').classList.add('hidden');
       document.getElementById('oldPasswordLabel').classList.add('hidden');
-
+      setTimeout(() => {
+        clearMessages();
+      }, 2000);
       newPasswordInput.classList.remove('hidden');
       confirmPasswordInput.classList.remove('hidden');
       document.getElementById('newPasswordLabel').classList.remove('hidden');
