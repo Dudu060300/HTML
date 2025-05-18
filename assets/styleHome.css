@@ -89,9 +89,9 @@ body.dark {
     .user-icon {
       width: 40px;
       height: 40px;
-      background: var(--text-light);
+      background: var(--bg-color);
       border-radius: 50%;
-      color: #000;
+      color: var(--text-color);
       display: flex;
       justify-content: center;
       align-items: center;
