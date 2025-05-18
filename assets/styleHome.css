@@ -21,6 +21,10 @@ body.dark {
   --text-color: #ffffff;
 }
 
+.hidden {
+  display: none;
+}
+
     * {
       box-sizing: border-box;
     }
