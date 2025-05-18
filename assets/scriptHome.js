@@ -144,8 +144,6 @@ function resetPasswordFields() {
   verifyPasswordBtn.disabled = false;
 }
 
-
-
 // --- Load profile from Firebase Auth ---
 function loadUserProfile() {
   const user = auth.currentUser;
@@ -217,7 +215,6 @@ profileForm.addEventListener('submit', async (e) => {
   const usernameChanged = newUsername && newUsername !== user.displayName;
   const passwordChangeRequested = !newPasswordInput.classList.contains('hidden');
 
-  // Se nessuna modifica è stata fatta
   if (!passwordChangeRequested && !usernameChanged) {
     showError('Nessuna modifica da salvare.');
     return;
@@ -228,7 +225,6 @@ profileForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  // Gestione cambio password
   if (passwordChangeRequested) {
     if (newPassword.length < 6) {
       showError('La nuova password deve contenere almeno 6 caratteri.');
@@ -251,12 +247,10 @@ profileForm.addEventListener('submit', async (e) => {
     }
   }
 
-  // Chiudi popup dopo 1 secondo (solo se ci sono successi)
   setTimeout(() => {
     closeProfilePopup();
   }, 1000);
 });
-
 
 // --- Aggiorna UI username al login ---
 auth.onAuthStateChanged(user => {
@@ -265,14 +259,9 @@ auth.onAuthStateChanged(user => {
     const isSocialLogin = providers.includes('google.com') || providers.includes('apple.com');
 
     if (isSocialLogin) {
-      editProfileBtn.style.display = 'none'; // Nasconde completamente il bottone
-      // Se vuoi un messaggio in pagina (opzionale), puoi mostrarlo qui
-      // ad esempio:
-      // document.getElementById('profileNotice').textContent = 'La modifica profilo non è disponibile per utenti Google/Apple.';
+      editProfileBtn.style.display = 'none';
     } else {
       editProfileBtn.style.display = 'inline-block';
-      // rimuovi eventuali messaggi
-      // document.getElementById('profileNotice').textContent = '';
     }
 
     if (userName) userName.textContent = user.displayName || 'Utente';
@@ -286,7 +275,7 @@ auth.onAuthStateChanged(user => {
 editProfileBtn.addEventListener('click', (e) => {
   if (editProfileBtn.style.display === 'none' || editProfileBtn.disabled) {
     e.preventDefault();
-    return; // Non aprire popup
+    return;
   }
   openProfilePopup();
 });
@@ -309,19 +298,14 @@ changeUsernameBtn.addEventListener('click', async () => {
   }
 
   try {
-    const user = auth.currentUser;
     if (!user) throw new Error('Utente non autenticato.');
 
-    // Aggiorna displayName su Firebase Authentication
     await user.updateProfile({ displayName: newUsername });
-
-    // Aggiorna Firestore
     await db.collection('users').doc(user.uid).update(
       { displayName: newUsername },
       { merge: true }
     );
 
-    // Aggiorna UI
     if (userName) userName.textContent = newUsername;
     if (userIcon) userIcon.textContent = newUsername.charAt(0).toUpperCase();
 
@@ -330,12 +314,12 @@ changeUsernameBtn.addEventListener('click', async () => {
     showError('Errore: ' + error.message);
   }
 
- setTimeout(() => {
+  setTimeout(() => {
     closeProfilePopup();
   }, 1000);
 });
 
-// Elementi
+// --- Settings popup and theme management ---
 document.addEventListener('DOMContentLoaded', () => {
   const settingsBtn = document.getElementById('openSettings');
   const settingsPopup = document.getElementById('settingsPopup');
@@ -347,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       document.documentElement.setAttribute('data-theme', savedTheme);
-      themeSelect.value = savedTheme;
+      if(themeSelect) themeSelect.value = savedTheme;
     }
   }
 
@@ -384,6 +368,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Imposta il tema all'avvio
   loadThemeSetting();
 });
