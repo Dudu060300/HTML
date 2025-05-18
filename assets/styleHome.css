@@ -12,7 +12,7 @@
 }
 
 body.dark {
-  --main-bg: #121212
+  --main-bg: #121212;
   --text-color: #ffffff;
 }
 
