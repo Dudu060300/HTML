@@ -261,11 +261,34 @@ profileForm.addEventListener('submit', async (e) => {
 // --- Aggiorna UI username al login ---
 auth.onAuthStateChanged(user => {
   if (user) {
+    const providers = user.providerData.map(p => p.providerId);
+    const isSocialLogin = providers.includes('google.com') || providers.includes('apple.com');
+
+    if (isSocialLogin) {
+      editProfileBtn.style.display = 'none'; // Nasconde completamente il bottone
+      // Se vuoi un messaggio in pagina (opzionale), puoi mostrarlo qui
+      // ad esempio:
+      // document.getElementById('profileNotice').textContent = 'La modifica profilo non è disponibile per utenti Google/Apple.';
+    } else {
+      editProfileBtn.style.display = 'inline-block';
+      // rimuovi eventuali messaggi
+      // document.getElementById('profileNotice').textContent = '';
+    }
+
     if (userName) userName.textContent = user.displayName || 'Utente';
     if (userIcon) userIcon.textContent = (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
   } else {
     location.href = 'index.html';
   }
+});
+
+// Blocca apertura popup se il bottone non è visibile o disabilitato
+editProfileBtn.addEventListener('click', (e) => {
+  if (editProfileBtn.style.display === 'none' || editProfileBtn.disabled) {
+    e.preventDefault();
+    return; // Non aprire popup
+  }
+  openProfilePopup();
 });
 
 changeUsernameBtn.addEventListener('click', async () => {
