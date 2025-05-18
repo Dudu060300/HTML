@@ -532,7 +532,7 @@
   }
   
   #profilePopup {
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch; /* abilitazione smooth scroll su iOS */
     width: 95vw;
