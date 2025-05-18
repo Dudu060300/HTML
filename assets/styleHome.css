@@ -1,6 +1,8 @@
 :root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
   --main-bg: #ffffff;
-  --nav-bg: #222;
+  --nav-bg: #000000;
   --accent-color: #00f7ff;
   --accent-hover: #00c2cc;
   --error-color: #ff4c4c;
@@ -12,7 +14,9 @@
 }
 
 body.dark {
-  --main-bg: #121212;
+  --bg-color: #000000;
+  --main-bg: #000000;
+  --nav-bg: #ffffff;
   --text-color: #ffffff;
 }
 
