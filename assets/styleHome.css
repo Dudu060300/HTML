@@ -538,5 +538,18 @@
   #verifyPasswordBtn {
     margin-bottom: 10px;
   }
+  
+  #profilePopup {
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* abilitazione smooth scroll su iOS */
+    width: 95vw;
+    padding: 25px 20px;
+  }
+
+  html, body {
+    height: 100vh;
+    overflow: auto;
+  }
 }
 
