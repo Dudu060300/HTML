@@ -312,3 +312,10 @@ changeUsernameBtn.addEventListener('click', async () => {
   }, 1000);
 });
 
+db.collection('users').doc(user.uid).get().then(doc => {
+  if (doc.exists) {
+    const data = doc.data();
+    if (userName) userName.textContent = data.displayName || 'Utente';
+    if (userIcon) userIcon.textContent = (data.displayName ? data.displayName.charAt(0).toUpperCase() : 'U');
+  }
+});
