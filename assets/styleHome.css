@@ -82,6 +82,7 @@ input[type="checkbox"][role="switch"]:checked {
 
 input[type="checkbox"][role="switch"]:checked::before {
   transform: translateX(26px);
+}
 
     body {
   margin: 0;
