@@ -212,16 +212,15 @@
       flex-direction: column;
       grid-template-columns: 100px 1fr;
       gap: 12px 10px;
-      align-items: center;
     }
 
     .form-group,
     .username-group,
     .old-password-group {
-       display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
   }
 
     label {
