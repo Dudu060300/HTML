@@ -505,11 +505,11 @@ input[type="checkbox"][role="switch"]:checked::before {
     text-align: center;
   }
 
+  @media (max-width: 600px) {
   #profilePopup {
-    max-height: 90vh;
-    overflow-y: auto;
-    width: 95vw;
-    padding: 25px 20px;
+    display: none !important;
+    opacity: 0 !important;
+    pointer-events: none;
   }
 }
 
