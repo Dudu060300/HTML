@@ -35,17 +35,32 @@ const userIcon = document.getElementById('userIcon');
 const userName = document.getElementById('userName');
 
 // --- Dropdown menu accessibility and toggle ---
-userMenu.addEventListener('click', () => {
+userMenu.addEventListener('click', async () => {
   const expanded = userMenu.getAttribute('aria-expanded') === 'true';
   userMenu.setAttribute('aria-expanded', String(!expanded));
   userMenu.classList.toggle('open');
-  // Aggiorna il nome utente ogni volta che si apre il menu
-  if (!expanded) { // solo se il menu sta per aprirsi
+
+  if (!expanded) {
     const user = auth.currentUser;
     if (user && userName) {
-      userName.textContent = user.displayName || 'Utente';
+      if (user.displayName) {
+        userName.textContent = user.displayName;
+      } else {
+        // Recupera da Firestore
+        try {
+          const doc = await db.collection('users').doc(user.uid).get();
+          if (doc.exists) {
+            const data = doc.data();
+            userName.textContent = data.displayName || 'Utente';
+          } else {
+            userName.textContent = 'Utente';
+          }
+        } catch {
+          userName.textContent = 'Utente';
+        }
+      }
     }
-}
+  }
 });
 
 document.addEventListener('click', (e) => {
