@@ -481,6 +481,7 @@ input[type="checkbox"][role="switch"]:checked::before {
     align-items: center;
     position: relative;
     margin-bottom: 20px;
+    background: #000000;
   }
 
   #barra h3 {
