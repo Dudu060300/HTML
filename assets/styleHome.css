@@ -506,10 +506,13 @@ input[type="checkbox"][role="switch"]:checked::before {
   }
 
   #profilePopup {
-    max-height: 90vh;
+    height: calc(100%-60px);
     overflow-y: auto;
-    width: 95vw;
+    width: 100%;
     padding: 25px 20px;
+    top:60px;
+    left:0;
+    position:fixed;
   }
 }
 
