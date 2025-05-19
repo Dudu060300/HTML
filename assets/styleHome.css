@@ -168,13 +168,13 @@ input[type="checkbox"][role="switch"]:checked::before {
 
 /* Stile username non cliccabile ma con lo stesso look */
 .dropdown-item.username-display {
-  color: var(--text-light);
+  color: #000000;
   padding: 12px 16px;
   font-weight: 600;
   display: block;
   cursor: default;      /* non cliccabile */
   user-select: none;    /* non selezionabile per errore */
-  background: transparent;
+  background: var(--accent-color);
 }
 
 /* Rimuovo hover/focus su username */
