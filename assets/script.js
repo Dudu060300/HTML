@@ -72,29 +72,50 @@ function register() {
   const password = document.getElementById("regPassword").value;
   const username = document.getElementById('regName').value;
 
-  // Crea utente con email e password tramite Firebase Auth
-  auth.createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
+  // Validazione input
+  if (!isValidEmail(email)) {
+    alert("Email non valida");
+    return;
+  }
+  if (!isValidPassword(password)) {
+    alert("La password deve essere lunga almeno 6 caratteri");
+    return;
+  }
+  if (!isValidUsername(username)) {
+    alert("Username non valido. Usa 3-15 caratteri, lettere, numeri o underscore.");
+    return;
+  }
+
+  // Controllo se username è già usato
+  db.collection("users").where("username", "==", username).get()
+    .then(snapshot => {
+      if (!snapshot.empty) {
+        throw new Error("Username già utilizzato");
+      }
+
+      // Se libero, crea utente
+      return auth.createUserWithEmailAndPassword(email, password);
+    })
+    .then(userCredential => {
       const user = userCredential.user;
 
-      // Aggiorna il profilo utente impostando lo username come displayName
-      return user.updateProfile({ displayName: username }).then(() => {
-        // Salva username e email nel database Firestore sotto la collezione "users"
-        return db.collection("users").doc(user.uid).set({
-          username: username,
-          email: email
+      // Aggiorna displayName
+      return user.updateProfile({ displayName: username })
+        .then(() => {
+          // Salva username e email in Firestore
+          return db.collection("users").doc(user.uid).set({
+            username: username,
+            email: email
+          });
         });
-      });
     })
     .then(() => {
-      // Animazione di transizione e reindirizzamento alla home dopo registrazione riuscita
       document.body.classList.add('login-transition');
       setTimeout(() => {
         window.location.href = "home.html";
       }, 800);
     })
-    .catch((error) => {
-      // Gestione errori in fase di registrazione
+    .catch(error => {
       alert("Errore registrazione: " + error.message);
     });
 }
