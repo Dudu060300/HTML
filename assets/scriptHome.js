@@ -1,5 +1,3 @@
-Aggiungi commenti ogni voce
-
 const firebaseConfig = {
   apiKey: "AIzaSyA1U8IL5gdwoKmsdZgANGR_646ZDbjU50c",
   authDomain: "proghtml-2e571.firebaseapp.com",
@@ -37,32 +35,17 @@ const userIcon = document.getElementById('userIcon');
 const userName = document.getElementById('userName');
 
 // --- Dropdown menu accessibility and toggle ---
-userMenu.addEventListener('click', async () => {
+userMenu.addEventListener('click', () => {
   const expanded = userMenu.getAttribute('aria-expanded') === 'true';
   userMenu.setAttribute('aria-expanded', String(!expanded));
   userMenu.classList.toggle('open');
-
-  if (!expanded) {
+  // Aggiorna il nome utente ogni volta che si apre il menu
+  if (!expanded) { // solo se il menu sta per aprirsi
     const user = auth.currentUser;
     if (user && userName) {
-      if (user.displayName) {
-        userName.textContent = user.displayName;
-      } else {
-        // Recupera da Firestore
-        try {
-          const doc = await db.collection('users').doc(user.uid).get();
-          if (doc.exists) {
-            const data = doc.data();
-            userName.textContent = data.displayName || 'Utente';
-          } else {
-            userName.textContent = 'Utente';
-          }
-        } catch {
-          userName.textContent = 'Utente';
-        }
-      }
+      userName.textContent = user.displayName || 'Utente';
     }
-  }
+}
 });
 
 document.addEventListener('click', (e) => {
@@ -115,6 +98,11 @@ function closeProfilePopup() {
   newPasswordInput.value = '';
   confirmPasswordInput.value = '';
 }
+
+editProfileBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  openProfilePopup();
+});
 
 closePopupBtn.addEventListener('click', closeProfilePopup);
 overlay.addEventListener('click', closeProfilePopup);
@@ -296,7 +284,6 @@ editProfileBtn.addEventListener('click', (e) => {
     e.preventDefault();
     return;
   }
-  e.preventDefault();
   openProfilePopup();
 });
 
