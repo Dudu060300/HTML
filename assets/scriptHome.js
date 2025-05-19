@@ -116,11 +116,6 @@ function closeProfilePopup() {
   confirmPasswordInput.value = '';
 }
 
-editProfileBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  openProfilePopup();
-});
-
 closePopupBtn.addEventListener('click', closeProfilePopup);
 overlay.addEventListener('click', closeProfilePopup);
 
@@ -301,6 +296,7 @@ editProfileBtn.addEventListener('click', (e) => {
     e.preventDefault();
     return;
   }
+  e.preventDefault();
   openProfilePopup();
 });
 
