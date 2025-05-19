@@ -506,7 +506,7 @@ input[type="checkbox"][role="switch"]:checked::before {
   }
 
   #profilePopup {
-    height: calc(100%-60px);
+    height: calc(100% - 60px);
     overflow-y: auto;
     width: 100%;
     padding: 25px 20px;
