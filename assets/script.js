@@ -16,6 +16,21 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
 
+// Validazione email
+function isValidEmail(email) {
+  return /\S+@\S+\.\S+/.test(email);
+}
+
+// Validazione password
+function isValidPassword(password) {
+  return password.length >= 6;
+}
+
+// Validazione username
+function isValidUsername(username) {
+  return /^[a-zA-Z0-9_]{3,15}$/.test(username);
+}
+
 // Funzione per animare il flip della card (ad esempio, form di login/registrazione)
 function flipCard() {
   document.getElementById('formContainer').classList.toggle('flipped'); // Aggiunge/rimuove classe CSS per animazione
