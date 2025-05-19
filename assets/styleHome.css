@@ -249,6 +249,7 @@ input[type="checkbox"][role="switch"]:checked::before {
       border-radius: 20px;
       padding: 10px;
       text-align: center;
+      background: #000000;
     }
 
     #barra h3 {
