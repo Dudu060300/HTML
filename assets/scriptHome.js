@@ -354,11 +354,25 @@ changeUsernameBtn.addEventListener('click', async () => {
   try {
     if (!user) throw new Error('Utente non autenticato.');
 
+    // Controlla se username è già usato da un altro utente
+    const snapshot = await db.collection('users')
+      .where('username', '==', newUsername)
+      .get();
+
+    if (!snapshot.empty) {
+      // Controlla se il documento trovato non è quello dell'utente corrente
+      const docExists = snapshot.docs.some(doc => doc.id !== user.uid);
+      if (docExists) {
+        showError('Username già utilizzato da un altro utente.');
+        return;
+      }
+    }
+
     // Aggiorna displayName su Firebase Auth
     await user.updateProfile({ displayName: newUsername });
     // Aggiorna displayName su Firestore nel documento utente
     await db.collection('users').doc(user.uid).update(
-      { displayName: newUsername },
+      { username: newUsername },
       { merge: true }
     );
 
