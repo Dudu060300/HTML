@@ -32,13 +32,20 @@ const profileForm = document.getElementById('profileForm');
 const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 
 const userIcon = document.getElementById('userIcon');
-const userNameSpan = document.getElementById('userNameSpan');
+const userName = document.getElementById('userName');
 
 // --- Dropdown menu accessibility and toggle ---
 userMenu.addEventListener('click', () => {
   const expanded = userMenu.getAttribute('aria-expanded') === 'true';
   userMenu.setAttribute('aria-expanded', String(!expanded));
   userMenu.classList.toggle('open');
+  // Aggiorna il nome utente ogni volta che si apre il menu
+  if (!expanded) { // solo se il menu sta per aprirsi
+    const user = auth.currentUser;
+    if (user && userName) {
+      userName.textContent = user.displayName || 'Utente';
+    }
+}
 });
 
 document.addEventListener('click', (e) => {
@@ -264,7 +271,7 @@ auth.onAuthStateChanged(user => {
       editProfileBtn.style.display = 'inline-block';
     }
 
-    if (userNameSpan) userNameSpan.textContent = user.displayName || 'Utente';
+    if (userName) userName.textContent = user.displayName || 'Utente';
     if (userIcon) userIcon.textContent = (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
   } else {
     location.href = 'index.html';
