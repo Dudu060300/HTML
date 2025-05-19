@@ -1,3 +1,4 @@
+// Configurazione Firebase per collegarsi al progetto
 const firebaseConfig = {
   apiKey: "AIzaSyA1U8IL5gdwoKmsdZgANGR_646ZDbjU50c",
   authDomain: "proghtml-2e571.firebaseapp.com",
@@ -6,11 +7,14 @@ const firebaseConfig = {
   messagingSenderId: "771370443646",
   appId: "1:771370443646:web:5dd712f9e03448ebda2463"
 };
+// Inizializza Firebase con la configurazione sopra
 firebase.initializeApp(firebaseConfig);
 
+// Riferimenti ai servizi Firebase Auth e Firestore
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// Riferimenti agli elementi DOM del menu utente e popup profilo
 const userMenu = document.getElementById('userMenu');
 const logoutBtn = document.getElementById('logout');
 const editProfileBtn = document.getElementById('editProfile');
@@ -34,19 +38,22 @@ const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 const userIcon = document.getElementById('userIcon');
 const userName = document.getElementById('userName');
 
-// --- Dropdown menu accessibility and toggle ---
+// --- Gestione apertura/chiusura e accessibilità menu utente ---
 userMenu.addEventListener('click', async () => {
+  // Toggle stato aria-expanded per accessibilità
   const expanded = userMenu.getAttribute('aria-expanded') === 'true';
   userMenu.setAttribute('aria-expanded', String(!expanded));
   userMenu.classList.toggle('open');
 
   if (!expanded) {
+    // Se si apre il menu, aggiorna il nome utente visualizzato
     const user = auth.currentUser;
     if (user && userName) {
       if (user.displayName) {
+        // Usa displayName da Firebase Auth
         userName.textContent = user.displayName;
       } else {
-        // Recupera da Firestore
+        // Se manca, recupera da Firestore la proprietà displayName
         try {
           const doc = await db.collection('users').doc(user.uid).get();
           if (doc.exists) {
@@ -63,6 +70,7 @@ userMenu.addEventListener('click', async () => {
   }
 });
 
+// Chiudi il menu se clicchi fuori
 document.addEventListener('click', (e) => {
   if (!userMenu.contains(e.target)) {
     userMenu.setAttribute('aria-expanded', 'false');
@@ -70,6 +78,7 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Supporto accessibilità da tastiera per il menu
 userMenu.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
@@ -87,48 +96,53 @@ userMenu.addEventListener('keydown', (e) => {
 logoutBtn.addEventListener('click', (e) => {
   e.preventDefault();
   auth.signOut().then(() => {
+    // Reindirizza a index.html dopo logout
     location.href = 'index.html';
   });
 });
 
-// --- Open/Close popup functions ---
+// --- Funzioni per apertura e chiusura popup profilo ---
 function openProfilePopup() {
-  overlay.classList.add('active');
-  profilePopup.classList.add('show');
+  overlay.classList.add('active');          // mostra overlay sfondo
+  profilePopup.classList.add('show');       // mostra popup
   profilePopup.classList.remove('hidden');
-  profilePopup.focus();
-  clearMessages();
-  resetPasswordFields();
-  loadUserProfile();
+  profilePopup.focus();                      // mette il focus nel popup
+  clearMessages();                          // pulisce messaggi di errore/successo
+  resetPasswordFields();                    // resetta i campi password
+  loadUserProfile();                        // carica dati utente da Firebase
 }
 
 function closeProfilePopup() {
-  overlay.classList.remove('active');
-  profilePopup.classList.remove('show');
+  overlay.classList.remove('active');       // nasconde overlay
+  profilePopup.classList.remove('show');    // nasconde popup
   profilePopup.classList.add('hidden');
-  clearMessages();
-  resetPasswordFields();
+  clearMessages();                          // pulisce messaggi
+  resetPasswordFields();                    // resetta campi password
+  // svuota input form
   usernameInput.value = '';
   oldPasswordInput.value = '';
   newPasswordInput.value = '';
   confirmPasswordInput.value = '';
 }
 
+// Apre popup profilo cliccando il bottone Modifica Profilo
 editProfileBtn.addEventListener('click', (e) => {
   e.preventDefault();
   openProfilePopup();
 });
 
+// Chiudi popup cliccando la X o l'overlay
 closePopupBtn.addEventListener('click', closeProfilePopup);
 overlay.addEventListener('click', closeProfilePopup);
 
+// Chiudi popup premendo ESC
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && profilePopup.classList.contains('show')) {
     closeProfilePopup();
   }
 });
 
-// --- Utility functions ---
+// --- Funzioni di utilità per messaggi feedback utente ---
 function showError(message) {
   errorMsg.textContent = message;
   errorMsg.classList.add('visible');
@@ -150,23 +164,27 @@ function clearMessages() {
   successMsg.classList.remove('visible');
 }
 
+// --- Reset campi password e visibilità dei controlli ---
 function resetPasswordFields() {
   oldPasswordInput.value = '';
   newPasswordInput.value = '';
   confirmPasswordInput.value = '';
 
+  // Mostra il gruppo vecchia password e label
   oldPasswordInput.closest('.old-password-group').classList.remove('hidden');
   document.getElementById('oldPasswordLabel').classList.remove('hidden');
 
+  // Nasconde nuovi campi password e label
   newPasswordInput.classList.add('hidden');
   confirmPasswordInput.classList.add('hidden');
   document.getElementById('newPasswordLabel').classList.add('hidden');
   document.getElementById('confirmPasswordLabel').classList.add('hidden');
 
+  // Abilita bottone verifica vecchia password
   verifyPasswordBtn.disabled = false;
 }
 
-// --- Load profile from Firebase Auth ---
+// --- Carica dati utente da Firebase Auth nel form ---
 function loadUserProfile() {
   const user = auth.currentUser;
   if (!user) {
@@ -177,7 +195,7 @@ function loadUserProfile() {
   usernameInput.value = user.displayName || '';
 }
 
-// --- Verify old password before allowing password change ---
+// --- Verifica vecchia password prima di cambiare ---
 verifyPasswordBtn.addEventListener('click', () => {
   clearMessages();
   const oldPass = oldPasswordInput.value.trim();
@@ -186,7 +204,7 @@ verifyPasswordBtn.addEventListener('click', () => {
     return;
   }
 
-  verifyPasswordBtn.disabled = true;
+  verifyPasswordBtn.disabled = true; // disabilita bottone per evitare doppie richieste
   const user = auth.currentUser;
   if (!user) {
     showError('Utente non autenticato.');
@@ -194,19 +212,23 @@ verifyPasswordBtn.addEventListener('click', () => {
     return;
   }
 
+  // Crea credenziale con email e vecchia password
   const credential = firebase.auth.EmailAuthProvider.credential(
     user.email,
     oldPass
   );
 
+  // Reautentica l'utente con la vecchia password
   user.reauthenticateWithCredential(credential)
     .then(() => {
       showSuccess('Password vecchia verificata. Inserisci la nuova password.');
+      // Nasconde input vecchia password e label
       oldPasswordInput.closest('.old-password-group').classList.add('hidden');
       document.getElementById('oldPasswordLabel').classList.add('hidden');
       setTimeout(() => {
         clearMessages();
       }, 2000);
+      // Mostra input nuova password e conferma + label
       newPasswordInput.classList.remove('hidden');
       confirmPasswordInput.classList.remove('hidden');
       document.getElementById('newPasswordLabel').classList.remove('hidden');
@@ -221,7 +243,7 @@ verifyPasswordBtn.addEventListener('click', () => {
     });
 });
 
-// --- Save profile changes (username + password) ---
+// --- Salva modifiche profilo (username + password) ---
 profileForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearMessages();
@@ -231,9 +253,11 @@ profileForm.addEventListener('submit', async (e) => {
     showError('Utente non autenticato.');
     return;
   }
+
   const newUsername = usernameInput.value.trim();
   const newPassword = newPasswordInput.value.trim();
   const confirmPassword = confirmPasswordInput.value.trim();
+
   const usernameChanged = newUsername && newUsername !== user.displayName;
   const passwordChangeRequested = !newPasswordInput.classList.contains('hidden');
 
@@ -242,11 +266,13 @@ profileForm.addEventListener('submit', async (e) => {
     return;
   }
 
+  // Se cambia solo username senza cambio password, richiede di cliccare "Cambia Username"
   if (usernameChanged && !passwordChangeRequested) {
     showError('Cliccare su Cambia Username.');
     return;
   }
 
+  // Se si cambia la password, esegue controlli base
   if (passwordChangeRequested) {
     if (newPassword.length < 6) {
       showError('La nuova password deve contenere almeno 6 caratteri.');
@@ -257,7 +283,7 @@ profileForm.addEventListener('submit', async (e) => {
       return;
     }
     try {
-      await user.updatePassword(newPassword);
+      await user.updatePassword(newPassword);  // aggiorna password su Firebase Auth
       showSuccess('Password aggiornata con successo.');
     } catch (err) {
       if (err.code === 'auth/requires-recent-login') {
@@ -269,31 +295,36 @@ profileForm.addEventListener('submit', async (e) => {
     }
   }
 
+  // Dopo 1 secondo chiude popup profilo
   setTimeout(() => {
     closeProfilePopup();
   }, 1000);
 });
 
-// --- Aggiorna UI username al login ---
+// --- Aggiorna UI quando cambia stato autenticazione ---
 auth.onAuthStateChanged(user => {
   if (user) {
+    // Verifica se l'utente ha effettuato login tramite provider social
     const providers = user.providerData.map(p => p.providerId);
     const isSocialLogin = providers.includes('google.com') || providers.includes('apple.com');
 
+    // Nasconde il bottone modifica profilo per login social (password gestita da provider)
     if (isSocialLogin) {
       editProfileBtn.style.display = 'none';
     } else {
       editProfileBtn.style.display = 'inline-block';
     }
 
+    // Aggiorna username e icona nell'header/menu
     if (userName) userName.textContent = user.displayName || 'Utente';
     if (userIcon) userIcon.textContent = (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
   } else {
+    // Se non autenticato, reindirizza alla pagina di login
     location.href = 'index.html';
   }
 });
 
-// Blocca apertura popup se il bottone non è visibile o disabilitato
+// Blocca apertura popup profilo se il bottone non è visibile o disabilitato
 editProfileBtn.addEventListener('click', (e) => {
   if (editProfileBtn.style.display === 'none' || editProfileBtn.disabled) {
     e.preventDefault();
@@ -302,6 +333,7 @@ editProfileBtn.addEventListener('click', (e) => {
   openProfilePopup();
 });
 
+// --- Cambia username e aggiorna su Firebase Auth + Firestore ---
 changeUsernameBtn.addEventListener('click', async () => {
   clearMessages();
 
@@ -322,12 +354,15 @@ changeUsernameBtn.addEventListener('click', async () => {
   try {
     if (!user) throw new Error('Utente non autenticato.');
 
+    // Aggiorna displayName su Firebase Auth
     await user.updateProfile({ displayName: newUsername });
+    // Aggiorna displayName su Firestore nel documento utente
     await db.collection('users').doc(user.uid).update(
       { displayName: newUsername },
       { merge: true }
     );
 
+    // Aggiorna UI username e icona
     if (userName) userName.textContent = newUsername;
     if (userIcon) userIcon.textContent = newUsername.charAt(0).toUpperCase();
 
@@ -336,99 +371,17 @@ changeUsernameBtn.addEventListener('click', async () => {
     showError('Errore: ' + error.message);
   }
 
+  // Chiude popup dopo 1 secondo
   setTimeout(() => {
     closeProfilePopup();
   }, 1000);
 });
 
+// --- Funzioni globali per gestione tema (light/dark) ---
 
-  // Funzioni globali per tema
+// Carica tema salvato da localStorage e applica
 function loadThemeSetting() {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.body.classList.toggle('dark', savedTheme === 'dark'); // aggiunto
-    const themeSelect = document.getElementById('themeSelect');
-    if (themeSelect) themeSelect.value = savedTheme;
-  }
-}
-
-function saveThemeSetting(theme) {
-  localStorage.setItem('theme', theme);
-  document.documentElement.setAttribute('data-theme', theme);
-  document.body.classList.toggle('dark', theme === 'dark'); // aggiunto
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const settingsBtn = document.getElementById('openSettings');
-  const settingsPopup = document.getElementById('settingsPopup');
-  const settingsOverlay = document.getElementById('settingsOverlay');
-  const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-  const themeSelect = document.getElementById('themeSelect');
-
-  if (settingsBtn && settingsPopup && settingsOverlay) {
-    settingsBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      loadThemeSetting();
-      settingsOverlay.classList.remove('hidden');
-      settingsPopup.classList.remove('hidden');
-      settingsPopup.focus();
-    });
-  }
-
-  if (closeSettingsBtn && settingsPopup && settingsOverlay) {
-    closeSettingsBtn.addEventListener('click', () => {
-      settingsOverlay.classList.add('hidden');
-      settingsPopup.classList.add('hidden');
-    });
-
-    settingsOverlay.addEventListener('click', () => {
-      settingsOverlay.classList.add('hidden');
-      settingsPopup.classList.add('hidden');
-    });
-  }
-
-  if (themeSelect) {
-    themeSelect.addEventListener('change', () => {
-      saveThemeSetting(themeSelect.value);
-    });
-  }
-
-  loadThemeSetting();
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const themeToggle = document.getElementById('themeToggle');
-  const themeLabel = document.getElementById('themeLabel');
-
-  // Inizializza toggle in base al tema corrente
-  themeToggle.checked = document.body.classList.contains('dark');
-
-  // Funzione per aggiornare il tema
-  function updateTheme(isDark) {
-    if (isDark) {
-      document.body.classList.add('dark');
-      themeToggle.setAttribute('aria-checked', 'true');
-    } else {
-      document.body.classList.remove('dark');
-      themeToggle.setAttribute('aria-checked', 'false');
-    }
-  }
-
-  // Cambia tema al toggle
-  themeToggle.addEventListener('change', () => {
-    if (themeToggle.checked) {
-      // Attiva dark mode
-      document.body.classList.add('dark');
-      themeLabel.textContent = 'Dark mode attiva';
-      themeToggle.setAttribute('aria-checked', 'true');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      // Attiva light mode
-      document.body.classList.remove('dark');
-      themeLabel.textContent = 'Light mode attiva';
-      themeToggle.setAttribute('aria-checked', 'false');
-      localStorage.setItem('theme', 'light');
-    }
-  });
-});
+    document.body.classList.toggle('dark', savedTheme
