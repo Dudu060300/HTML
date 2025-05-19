@@ -497,5 +497,4 @@ document.addEventListener('DOMContentLoaded', () => {
       themeToggle.setAttribute('aria-checked', 'false');    // Aggiorna aria per accessibilità
       localStorage.setItem('theme', 'light');                // Salva scelta light
     }
-  });
 });
