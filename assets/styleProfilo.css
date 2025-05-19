@@ -1,0 +1,130 @@
+:root {
+  --bg-dark: #121212;
+  --bg-light: #ffffff;
+  --text-dark: #ffffff;
+  --text-light: #000000;
+  --accent: #007BFF;
+  --error: #ff4d4d;
+  --success: #4CAF50;
+  --border-radius: 8px;
+  --padding: 16px;
+}
+
+body.dark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+body.light {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+#profilePopup {
+  background-color: inherit;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+#barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--padding);
+}
+
+#barra h3 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+#barra button {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group,
+.username-group,
+.old-password-group {
+  margin-bottom: var(--padding);
+}
+
+label {
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: var(--border-radius);
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+input:focus {
+  border-color: var(--accent);
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--accent);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+#errorMsg {
+  color: var(--error);
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+#successMsg {
+  color: var(--success);
+  font-size: 0.95rem;
+  margin-top: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  #profilePopup {
+    max-width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  body {
+    padding: 0;
+  }
+
+  form {
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+  }
+}
