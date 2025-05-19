@@ -32,7 +32,7 @@ const profileForm = document.getElementById('profileForm');
 const changeUsernameBtn = document.getElementById('changeUsernameBtn');
 
 const userIcon = document.getElementById('userIcon');
-const userName = document.getElementById('userName');
+const userNameSpan = document.getElementById('userNameSpan');
 
 // --- Dropdown menu accessibility and toggle ---
 userMenu.addEventListener('click', () => {
@@ -264,7 +264,7 @@ auth.onAuthStateChanged(user => {
       editProfileBtn.style.display = 'inline-block';
     }
 
-    if (userName) userName.textContent = user.displayName || 'Utente';
+    if (userNameSpan) userNameSpan.textContent = user.displayName || 'Utente';
     if (userIcon) userIcon.textContent = (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
   } else {
     location.href = 'index.html';
