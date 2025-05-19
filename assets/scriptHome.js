@@ -394,8 +394,108 @@ changeUsernameBtn.addEventListener('click', async () => {
 // --- Funzioni globali per gestione tema (light/dark) ---
 
 // Carica tema salvato da localStorage e applica
+// Carica il tema salvato da localStorage e lo applica alla pagina
 function loadThemeSetting() {
+  // Recupera il tema salvato in precedenza
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
+    // Imposta l'attributo data-theme sull'elemento root <html>
     document.documentElement.setAttribute('data-theme', savedTheme);
-    document.body.classList.toggle('dark', savedTheme
+    // Aggiunge o rimuove la classe 'dark' al body in base al tema salvato
+    document.body.classList.toggle('dark', savedTheme === 'dark');
+    // Sincronizza il valore del select nel popup impostandolo al tema salvato
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) themeSelect.value = savedTheme;
+  }
+}
+
+// Salva il tema scelto su localStorage e aggiorna la pagina con il tema selezionato
+function saveThemeSetting(theme) {
+  // Salva il tema in locale per ricordarlo dopo refresh
+  localStorage.setItem('theme', theme);
+  // Imposta l'attributo data-theme sull'elemento root <html>
+  document.documentElement.setAttribute('data-theme', theme);
+  // Aggiunge o rimuove la classe 'dark' al body in base al tema selezionato
+  document.body.classList.toggle('dark', theme === 'dark');
+}
+
+// Al caricamento della pagina
+document.addEventListener('DOMContentLoaded', () => {
+  // Prendi gli elementi DOM relativi al popup impostazioni
+  const settingsBtn = document.getElementById('openSettings');      // Bottone per aprire impostazioni
+  const settingsPopup = document.getElementById('settingsPopup');   // Popup impostazioni
+  const settingsOverlay = document.getElementById('settingsOverlay'); // Overlay dietro popup
+  const closeSettingsBtn = document.getElementById('closeSettingsBtn'); // Bottone chiudi popup
+  const themeSelect = document.getElementById('themeSelect');       // Select per tema
+
+  // Se i pulsanti e popup esistono, aggiungi gestori eventi
+  if (settingsBtn && settingsPopup && settingsOverlay) {
+    settingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadThemeSetting();  // Carica tema salvato all'apertura popup
+      settingsOverlay.classList.remove('hidden'); // Mostra overlay
+      settingsPopup.classList.remove('hidden');   // Mostra popup
+      settingsPopup.focus();                        // Focus sul popup per accessibilità
+    });
+  }
+
+  // Gestisci chiusura popup con bottone o clic su overlay
+  if (closeSettingsBtn && settingsPopup && settingsOverlay) {
+    closeSettingsBtn.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');   // Nascondi overlay
+      settingsPopup.classList.add('hidden');     // Nascondi popup
+    });
+
+    settingsOverlay.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');   // Nascondi overlay
+      settingsPopup.classList.add('hidden');     // Nascondi popup
+    });
+  }
+
+  // Cambia tema al variare del select e salva la scelta
+  if (themeSelect) {
+    themeSelect.addEventListener('change', () => {
+      saveThemeSetting(themeSelect.value);
+    });
+  }
+
+  // All'apertura pagina, carica e applica tema salvato
+  loadThemeSetting();
+});
+
+// Altro event listener DOMContentLoaded per gestire toggle switch del tema
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggle = document.getElementById('themeToggle'); // Toggle switch per tema
+  const themeLabel = document.getElementById('themeLabel');   // Label per indicare stato tema
+
+  // Inizializza toggle switch in base alla classe 'dark' sul body
+  themeToggle.checked = document.body.classList.contains('dark');
+
+  // Funzione di utilità per aggiornare stato tema e attributi aria
+  function updateTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark');
+      themeToggle.setAttribute('aria-checked', 'true');
+    } else {
+      document.body.classList.remove('dark');
+      themeToggle.setAttribute('aria-checked', 'false');
+    }
+  }
+
+  // Quando l'utente cambia toggle switch
+  themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+      // Attiva modalità dark
+      document.body.classList.add('dark');
+      themeLabel.textContent = 'Dark mode attiva';          // Aggiorna label testo
+      themeToggle.setAttribute('aria-checked', 'true');     // Aggiorna aria per accessibilità
+      localStorage.setItem('theme', 'dark');                 // Salva scelta dark
+    } else {
+      // Attiva modalità light
+      document.body.classList.remove('dark');
+      themeLabel.textContent = 'Light mode attiva';         // Aggiorna label testo
+      themeToggle.setAttribute('aria-checked', 'false');    // Aggiorna aria per accessibilità
+      localStorage.setItem('theme', 'light');                // Salva scelta light
+    }
+  });
+});
