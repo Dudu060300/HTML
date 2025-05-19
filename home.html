@@ -112,6 +112,19 @@
     <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
     <script src="assets/scriptHome.js"></script>
 
+<script>
+  document.getElementById('editProfileBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+    if (window.innerWidth <= 600) {
+      // Reindirizza a profilo.html su dispositivi piccoli
+      window.location.href = 'profilo.html';
+    } else {
+      // Mostra il popup su schermi più grandi
+      document.getElementById('overlay').classList.add('active');
+      document.getElementById('profilePopup').classList.add('show');
+    }
+  });
+</script>
     
   </body>
 </html>
