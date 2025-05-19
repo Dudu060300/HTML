@@ -323,6 +323,7 @@ main h2 {
   margin-top: 0;                 /* nessun margine sopra */
   position: absolute;            /* posizione assoluta */
   background: none;
+}
 
 /* Bottoni principali */
 button {
