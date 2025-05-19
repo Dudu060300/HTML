@@ -1,522 +1,571 @@
 :root {
-  /* Colore di sfondo principale */
   --bg-color: #ffffff;
-  /* Colore testo principale */
   --text-color: #000000;
-  /* Sfondo principale (può coincidere con bg-color) */
   --main-bg: #ffffff;
-  /* Sfondo barra di navigazione */
   --nav-bg: #000000;
-  /* Colore testo barra di navigazione */
   --nav-text: #ffffff;
-  /* Sfondo popup */
   --popup-bg: #000000;
-  /* Colore testo popup */
   --popup-color: #ffffff;
-  /* Colore accento (es. bottoni, hover) */
   --accent-color: #00f7ff;
-  /* Colore accento per hover */
   --accent-hover: #00c2cc;
-  /* Colore messaggi di errore */
   --error-color: #ff4c4c;
-  /* Colore messaggi di successo */
   --success-color: #4cff6b;
-  /* Colore testo chiaro (bianco) */
   --text-light: #fff;
-  /* Colore testo attenuato (grigio chiaro) */
   --text-muted: #bbb;
-  /* Sfondo input in sola lettura */
   --input-bg-readonly: #444;
-  /* Velocità di transizione per animazioni */
   --transition-speed: 0.3s;
 }
 
-/* Tema scuro: sovrascrive alcune variabili */
 body.dark {
-  --popup-bg: #ffffff;      /* Sfondo popup chiaro */
-  --popup-color: #000000;   /* Testo popup scuro */
-  --bg-color: #000000;      /* Sfondo pagina scuro */
-  --main-bg: #000000;       /* Sfondo principale scuro */
-  --nav-bg: #ffffff;        /* Sfondo navbar chiaro */
-  --nav-text: #000000;      /* Testo navbar scuro */
-  --text-color: #ffffff;    /* Testo principale chiaro */
+  --popup-bg: #ffffff;
+  --popup-color: #000000;
+  --bg-color: #000000;
+  --main-bg: #000000;
+  --nav-bg: #ffffff;
+  --nav-text: #000000;
+  --text-color: #ffffff;
 }
 
-/* Applica box-sizing border-box a tutti gli elementi, così padding e border rientrano nella dimensione totale */
-* {
-  box-sizing: border-box;
+    * {
+      box-sizing: border-box;
+    }
+
+    #settingsOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 998;
 }
 
-/* Overlay semi-trasparente per sfondo modal impostazioni */
-#settingsOverlay {
-  position: fixed;          /* posizione fissa su tutta la pagina */
-  top: 0; left: 0;         /* parte dall'angolo in alto a sinistra */
-  width: 100%; height: 100%; /* copre tutta la viewport */
-  background: rgba(0, 0, 0, 0.5); /* sfondo nero trasparente */
-  z-index: 998;            /* sopra quasi tutto tranne popup */
-}
-
-/* Popup centrato per le impostazioni */
 #settingsPopup {
-  position: fixed;          /* posizione fissa */
-  top: 50%; left: 50%;      /* centro verticale e orizzontale */
-  transform: translate(-50%, -50%); /* sposta esattamente al centro */
-  background: var(--bg-color); /* colore di sfondo variabile */
-  color: var(--text-color);     /* colore testo variabile */
-  padding: 20px;             /* spazio interno */
-  z-index: 999;              /* sopra l'overlay */
-  border-radius: 8px;        /* angoli arrotondati */
-  min-width: 300px;          /* larghezza minima */
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-color);
+  color: var(--text-color);
+  padding: 20px;
+  z-index: 999;
+  border-radius: 8px;
+  min-width: 300px;
 }
 
-/* Stile base per checkbox usato come toggle switch */
+/* Toggle switch stile base */
 input[type="checkbox"][role="switch"] {
-  width: 50px;               /* larghezza del toggle */
-  height: 24px;              /* altezza del toggle */
-  position: relative;        /* per posizionare il pallino interno */
-  -webkit-appearance: none;  /* rimuove stile di default */
-  background: #c6c6c6;       /* colore di sfondo grigio */
-  outline: none;             /* rimuove outline di default */
-  border-radius: 12px;       /* angoli arrotondati per forma ovale */
-  transition: background 0.3s; /* transizione colore di sfondo */
-  cursor: pointer;           /* cursore a mano */
+  width: 50px;
+  height: 24px;
+  position: relative;
+  -webkit-appearance: none;
+  background: #c6c6c6;
+  outline: none;
+  border-radius: 12px;
+  transition: background 0.3s;
+  cursor: pointer;
 }
 
-/* Pallino interno del toggle */
 input[type="checkbox"][role="switch"]::before {
-  content: '';               /* elemento vuoto */
-  position: absolute;        /* posizione assoluta rispetto al toggle */
-  width: 22px;               /* dimensione del pallino */
+  content: '';
+  position: absolute;
+  width: 22px;
   height: 22px;
-  border-radius: 50%;        /* forma circolare */
-  top: 1px;                  /* distanza dal bordo superiore */
-  left: 1px;                 /* distanza dal bordo sinistro */
-  background: #fff;          /* colore bianco */
-  transition: 0.3s;          /* transizione fluida */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* ombra leggera */
+  border-radius: 50%;
+  top: 1px;
+  left: 1px;
+  background: #fff;
+  transition: 0.3s;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Colore background del toggle quando attivo (checked) */
 input[type="checkbox"][role="switch"]:checked {
-  background: var(--accent-color); /* colore di accento */
+  background: var(--accent-color);
 }
 
-/* Sposta il pallino a destra quando toggle è attivo */
 input[type="checkbox"][role="switch"]:checked::before {
   transform: translateX(26px);
 }
 
-/* Stile base del body */
-body {
-  margin: 0;                          /* nessun margine */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* font di sistema */
-  background: var(--bg-color);        /* colore di sfondo variabile */
-  color: var(--text-color);           /* colore testo variabile */
+    body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
-/* ===== NAVIGATION ===== */
+    /* ===== NAVIGATION ===== */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      padding: 0 20px;
+      height: 60px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-/* Barra di navigazione principale */
-nav {
-  display: flex;                      /* flexbox per layout */
-  justify-content: space-between;    /* spaziatura tra elementi */
-  align-items: center;               /* allinea verticalmente */
-  background: var(--nav-bg);          /* colore sfondo nav */
-  color: var(--nav-text);             /* colore testo nav */
-  padding: 0 20px;                   /* padding orizzontale */
-  height: 60px;                      /* altezza nav */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.7); /* ombra sotto nav */
-  position: sticky;                  /* nav fissa in cima durante scroll */
-  top: 0;                           /* posizione top */
-  z-index: 10;                      /* sopra altri contenuti */
-}
+    nav h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
 
-/* Titolo principale della nav */
-nav h1 {
-  font-weight: 700;                  /* grassetto */
-  font-size: 1.5rem;                 /* dimensione font */
-}
+    .user-menu {
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
 
-/* Contenitore menu utente con icona e nome */
-.user-menu {
-  position: relative;                /* per posizionare dropdown */
-  cursor: pointer;                  /* cursore a mano */
-  display: flex;                    /* flex layout */
-  align-items: center;              /* allineamento verticale */
-  gap: 10px;                       /* spazio tra icona e testo */
-  user-select: none;               /* impedisce selezione testo */
-}
+    .user-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-color);
+      border-radius: 50%;
+      color: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
 
-/* Icona utente, forma circolare */
-.user-icon {
-  width: 40px;                      /* larghezza */
-  height: 40px;                     /* altezza */
-  background: var(--bg-color);      /* colore sfondo */
-  border-radius: 50%;               /* cerchio */
-  color: var(--text-color);         /* colore testo */
-  display: flex;                    /* flexbox */
-  justify-content: center;          /* centra orizzontalmente */
-  align-items: center;              /* centra verticalmente */
-  font-weight: bold;                /* grassetto */
-  font-size: 1.2rem;                /* dimensione font */
-  flex-shrink: 0;                   /* non si riduce */
-}
+    .dropdown {
+      position: absolute;
+      right: 0;
+      top: 50px;
+      background: #333;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      display: none;
+      flex-direction: column;
+      min-width: 180px;
+      z-index: 20;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+      pointer-events: none;
+    }
 
-/* Dropdown menu utente (nascosto di default) */
-.dropdown {
-  position: absolute;               /* posizione assoluta */
-  right: 0;                        /* ancorato a destra */
-  top: 50px;                      /* sotto la nav */
-  background: #333;                /* sfondo scuro */
-  border-radius: 8px;             /* angoli arrotondati */
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5); /* ombra */
-  display: none;                  /* nascosto */
-  flex-direction: column;         /* elementi in colonna */
-  min-width: 180px;               /* larghezza minima */
-  z-index: 20;                   /* sopra nav */
-  opacity: 0;                    /* trasparente */
-  transform: translateY(-10px);  /* spostato leggermente in alto */
-  transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease; /* transizioni */
-  pointer-events: none;          /* non cliccabile quando nascosto */
-}
+    .dropdown a {
+      color: var(--text-light);
+      padding: 12px 16px;
+      text-decoration: none;
+      transition: background var(--transition-speed);
+      font-weight: 600;
+    }
 
-/* Link all'interno del dropdown */
-.dropdown a {
-  color: var(--text-light);        /* colore testo chiaro */
-  padding: 12px 16px;              /* padding interno */
-  text-decoration: none;           /* rimuove sottolineatura */
-  transition: background var(--transition-speed); /* transizione sfondo */
-  font-weight: 600;                /* font medio/grassetto */
-}
+    .dropdown a:hover,
+    .dropdown a:focus {
+      background: var(--accent-color);
+      color: #000;
+      outline: none;
+    }
 
-/* Effetto hover e focus su link dropdown */
-.dropdown a:hover,
-.dropdown a:focus {
-  background: var(--accent-color); /* colore di accento */
-  color: #000;                     /* testo nero */
-  outline: none;                  /* nessun contorno */
-}
-
-/* Username mostrato nel dropdown, non cliccabile */
+/* Stile username non cliccabile ma con lo stesso look */
 .dropdown-item.username-display {
-  color: var(--text-light);        /* testo chiaro */
-  padding: 12px 16px;              /* padding */
-  font-weight: 600;                /* font medio */
-  display: block;                  /* block per occupare tutta la larghezza */
-  cursor: default;                /* cursore default */
-  user-select: none;              /* non selezionabile */
-  background: transparent;        /* sfondo trasparente */
+  color: var(--text-light);
+  padding: 12px 16px;
+  font-weight: 600;
+  display: block;
+  cursor: default;      /* non cliccabile */
+  user-select: none;    /* non selezionabile per errore */
+  background: transparent;
 }
 
-/* Disabilita hover/focus sull'username per mantenere aspetto */
+/* Rimuovo hover/focus su username */
 .dropdown-item.username-display:hover,
 .dropdown-item.username-display:focus {
-  background: transparent;        /* nessuno sfondo */
-  color: var(--text-light);       /* colore testo invariato */
-  outline: none;                  /* nessun outline */
+  background: transparent;
+  color: var(--text-light);
+  outline: none;
 }
 
-/* Quando menu utente è aperto, mostra dropdown */
-.user-menu.open .dropdown {
-  display: flex;                  /* mostra come flex */
-  opacity: 1;                    /* opacità piena */
-  transform: translateY(0);      /* posizione originale */
-  pointer-events: auto;          /* cliccabile */
-}
+    .user-menu.open .dropdown {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
 
-/* Freccia dropdown */
-.arrow {
-  display: inline-block;           /* inline-block */
-  margin-left: 6px;                /* margine sinistro */
-  transition: transform var(--transition-speed) ease; /* transizione rotazione */
-  font-size: 1.1rem;               /* dimensione font */
-  user-select: none;               /* non selezionabile */
-}
+    .arrow {
+      display: inline-block;
+      margin-left: 6px;
+      transition: transform var(--transition-speed) ease;
+      font-size: 1.1rem;
+      user-select: none;
+    }
 
-/* Ruota la freccia quando menu aperto */
-.user-menu.open .arrow {
-  transform: rotate(180deg);       /* ruota di 180 gradi */
-}
+    .user-menu.open .arrow {
+      transform: rotate(180deg);
+    }
 
-/* ===== MAIN CONTENT ===== */
+    /* ===== MAIN CONTENT ===== */
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-/* Padding e centratura contenuto principale */
-main {
-  padding: 40px 20px;              /* padding verticale e orizzontale */
-  text-align: center;              /* testo centrato */
-}
+    main h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
 
-/* Titoli principali */
-main h2 {
-  font-weight: 700;                /* grassetto */
-  margin-bottom: 20px;             /* spazio sotto */
-}
+    /* ===== OVERLAY ===== */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 45;
+      display: none;
+      opacity: 0;
+      transition: opacity var(--transition-speed) ease;
+    }
+    #overlay.active {
+      display: block;
+      opacity: 1;
+    }
 
-/* ===== OVERLAY ===== */
+    /* ===== POPUP PROFILO ===== */
+    #profilePopup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.95);
+      background: var(--popup-bg);
+      color: var(--popup-color);
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.8);
+      z-index: 50;
+      width: 500px;
+      max-width: 90vw;
+      display: none;
+      opacity: 0;
+      transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+      outline: none;
+    }
 
-/* Overlay semi-trasparente nascosto di default */
-#overlay {
-  position: fixed;                 /* posizione fissa */
-  inset: 0;                       /* copre tutto (top,right,bottom,left 0) */
-  background: rgba(0,0,0,0.6);    /* sfondo nero trasparente */
-  z-index: 45;                    /* sopra altri elementi */
-  display: none;                  /* nascosto */
-  opacity: 0;                    /* invisibile */
-  transition: opacity var(--transition-speed) ease; /* transizione opacità */
-}
+    #profilePopup.show {
+      display: block;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
 
-/* Overlay attivo visibile */
-#overlay.active {
-  display: block;                 /* mostra overlay */
-  opacity: 1;                    /* piena opacità */
-}
+    #barra {
+      position: relative;
+      margin-bottom: 20px;
+      border: solid;
+      border-radius: 20px;
+      padding: 10px;
+      text-align: center;
+      background: #000000;
+    }
 
-/* ===== POPUP PROFILO ===== */
+    #barra h3 {
+      margin: 0;
+      color: var(--accent-color);
+      font-size: 1.4rem;
+      user-select: none;
+    }
 
-/* Popup profilo centrato e nascosto di default */
-#profilePopup {
-  position: fixed;                 /* posizione fissa */
-  top: 50%; left: 50%;            /* centro */
-  transform: translate(-50%, -50%) scale(0.95); /* centrato e leggermente ridotto */
-  background: var(--popup-bg);     /* colore di sfondo popup */
-  color: var(--popup-color);       /* colore testo popup */
-  padding: 25px 30px;              /* padding interno */
-  border-radius: 12px;             /* angoli arrotondati */
-  box-shadow: 0 5px 20px rgba(0,0,0,0.8); /* ombra profonda */
-  z-index: 50;                    /* sopra overlay */
-  width: 500px;                   /* larghezza fissa */
-  max-width: 90vw;                /* massima larghezza viewport */
-  display: none;                  /* nascosto */
-  opacity: 0;                    /* trasparente */
-  transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease; /* transizioni */
-  outline: none;                 /* nessun contorno */
-}
+    #closePopupBtn {
+      margin-top: 0;
+      position: absolute;
+      /* top: 5px; */
+      /* right: 5px; */
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: var(--accent-color);
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0px;
+      user-select: none;
+      transition: color var(--transition-speed);
+    }
+    #closePopupBtn:hover,
+    #closePopupBtn:focus {
+      color: var(--accent-hover);
+      outline: none;
+    }
 
-/* Mostra popup profilo */
-#profilePopup.show {
-  display: block;                /* mostra */
-  opacity: 1;                   /* opacità piena */
-  transform: translate(-50%, -50%) scale(1); /* scala normale */
-}
+    /* ===== FORM PROFILO ===== */
+    form {
+      display: flex;
+      flex-direction: column;
+      grid-template-columns: 100px 1fr;
+      gap: 12px 10px;
+    }
 
-/* Barra interna del popup */
-#barra {
-  position: relative;            /* posizionamento relativo */
-  margin-bottom: 20px;           /* spazio sotto */
-  border: solid;                 /* bordo solido */
-  border-radius: 20px;           /* angoli arrotondati */
-  padding: 10px;                 /* padding */
-  text-align: center;            /* testo centrato */
-  background: #000000;           /* sfondo nero */
-}
+    .form-group,
+    .username-group,
+    .old-password-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      width: 100%;
+  }
 
-/* Titolo barra con colore accento */
-#barra h3 {
-  margin: 0;                    /* nessun margine */
-  color: var(--accent-color);   /* colore accento */
-  font-size: 1.4rem;            /* dimensione font */
-  user-select: none;            /* testo non selezionabile */
-}
+    label {
+      font-weight: 600;
+      user-select: none;
+      text-align: left;
+    }
 
-/* Bottone chiusura popup */
-#closePopupBtn {
-  margin-top: 0;                 /* nessun margine sopra */
-  position: absolute;            /* posizione assoluta */
-  background: none;
-}
+    input {
+      height: 40px;
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 6px;
+      outline: none;
+      box-sizing: border-box;
+      width: 100%;
+      transition: box-shadow var(--transition-speed);
+      background: #222;
+      background-color: #2a2a2a; /* colore di sfondo */
+      color: var(--text-light); /* testo chiaro */
+      border: 1px solid #444;   /* bordo leggero */
+    }
 
-/* Bottoni principali */
-button {
-  grid-column: 1 / span 2;           /* Il pulsante occupa due colonne nella griglia */
-  margin-top: 15px;                  /* Spazio sopra il pulsante */
-  padding: 10px 0;                  /* Spaziatura interna verticale (alto e basso), niente orizzontale */
-  background: var(--accent-color);  /* Colore di sfondo preso da una variabile CSS */
-  border: none;                    /* Nessun bordo */
-  border-radius: 8px;              /* Angoli arrotondati di 8px */
-  font-weight: 700;                /* Testo in grassetto */
-  color: #000;                    /* Colore del testo nero */
-  font-size: 1.1rem;              /* Dimensione del testo leggermente più grande della dimensione base */
-  cursor: pointer;                /* Cambia il cursore in "mano" al passaggio del mouse */
-  transition: background var(--transition-speed); /* Transizione fluida del background basata sulla variabile velocità */
-}
+    input:focus {
+      box-shadow: 0 0 6px var(--accent-color);
+      background: #111;
+    }
 
-button:hover,
-button:focus {
-  background: var(--accent-hover); /* Cambia il colore di sfondo al passaggio del mouse o al focus */
-  outline: none;                   /* Rimuove il bordo di default al focus */
-}
+    input[readonly] {
+      background: var(--input-bg-readonly);
+      color: var(--text-muted);
+      cursor: default;
+    }
 
-#verifyPasswordBtn {
-  padding: 0 16px;                 /* Spaziatura interna orizzontale di 16px, zero verticale */
-  font-size: 0.9rem;               /* Testo un po' più piccolo */
-  height: 40px;                    /* Altezza fissa di 40px */
-  margin-top: 0;                   /* Nessuno spazio sopra */
-  border-radius: 6px;              /* Angoli leggermente arrotondati */
-  font-weight: 600;                /* Peso del font medio-grassetto */
-  background: var(--accent-color); /* Sfondo con colore variabile */
-  color: #000;                    /* Testo nero */
-  transition: background var(--transition-speed); /* Transizione fluida del colore di sfondo */
-}
+    /* Stato messaggi */
+    #errorMsg, #successMsg {
+      display: none;
+      grid-column: 1 / span 2;
+      font-weight: 700;
+      min-height: 20px;
+      user-select: none;
+      padding-left: 4px;
+      font-size: 0.9rem;
+      border-radius: 4px;
+    }
 
-#verifyPasswordBtn:hover,
-#verifyPasswordBtn:focus {
-  background: var(--accent-hover); /* Sfondo cambia colore al passaggio o focus */
-  outline: none;                   /* Nessun bordo al focus */
-}
+    #errorMsg.visible {
+      display: block;
+      color: var(--error-color);
+      background: rgba(255, 76, 76, 0.1);
+      margin-top: 6px;
+      transition: opacity var(--transition-speed);
+    }
 
-/* Flex per vecchia password + bottone */
-/* (qui manca codice, probabilmente serve aggiungere display:flex etc.) */
+    #successMsg.visible {
+      display: block;
+      color: var(--success-color);
+      text-align: center;
+      margin-top: 8px;
+      background: rgba(76, 255, 107, 0.15);
+      transition: opacity var(--transition-speed);
+    }
 
-/* Nascondi password fields di default */
-.hidden {
-  display: none !important;       /* Nasconde l'elemento, forza la regola ignorando altre */
-}
+    /* Bottoni */
+    button {
+      grid-column: 1 / span 2;
+      margin-top: 15px;
+      padding: 10px 0;
+      background: var(--accent-color);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      color: #000;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background var(--transition-speed);
+    }
 
-#changeUsernameBtn {
-  padding: 0 16px;                 /* Spaziatura interna orizzontale */
-  font-size: 0.9rem;               /* Dimensione testo */
-  height: 40px;                    /* Altezza fissa */
-  margin-top: 0;                   /* Nessun margine superiore */
-  border-radius: 6px;              /* Angoli arrotondati */
-  font-weight: 600;                /* Peso del font */
-  background: var(--accent-color); /* Colore di sfondo */
-  color: #000;                    /* Colore testo nero */
-  transition: background var(--transition-speed); /* Transizione dello sfondo */
-}
+    button:hover,
+    button:focus {
+      background: var(--accent-hover);
+      outline: none;
+    }
 
-#changeUsernameBtn:hover {
-  background: var(--accent-hover); /* Sfondo cambia al passaggio */
-  outline: none;                   /* Nessun contorno al focus */
-}
+    #verifyPasswordBtn {
+      padding: 0 16px;
+      font-size: 0.9rem;
+      height: 40px;
+      margin-top: 0;
+      border-radius: 6px;
+      font-weight: 600;
+      background: var(--accent-color);
+      color: #000;
+      transition: background var(--transition-speed);
+    }
+    #verifyPasswordBtn:hover,
+    #verifyPasswordBtn:focus {
+      background: var(--accent-hover);
+      outline: none;
+    }
+
+    /* Flex per vecchia password + bottone */
+ 
+
+    /* Nascondi password fields di default */
+    .hidden {
+      display: none !important;
+    }
+
+    #changeUsernameBtn {
+      padding: 0 16px;
+      font-size: 0.9rem;
+      height: 40px;
+      margin-top: 0;
+      border-radius: 6px;
+      font-weight: 600;
+      background: var(--accent-color);
+      color: #000;
+      transition: background var(--transition-speed);
+    }
+
+    #changeUsernameBtn:hover {
+      background: var(--accent-hover);
+      outline: none;
+    }
 
 @media (max-width: 600px) {
-  /* Layout form su schermi piccoli */
+  /* Layout form */
   form {
-    display: flex;                 /* Usa flexbox */
-    flex-direction: column;       /* Elementi in colonna */
-    gap: 18px;                    /* Spaziatura tra gli elementi */
-    width: 100%;                  /* Larghezza piena */
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    width: 100%;
   }
 
   .form-group {
-    display: flex;                /* Flex container */
-    flex-direction: column;       /* Colonna */
-    align-items: anchor-center;   /* (Nota: valore non valido CSS, forse intendevi center) */
-    width: 100%;                  /* Larghezza piena */
+    display: flex;
+    flex-direction: column;
+    align-items: anchor-center;
+    width: 100%;
   }
 
   .form-group label {
-    width: 100%;                  /* Larghezza label piena */
-    text-align: left;             /* Allineamento testo a sinistra */
-    margin-bottom: 5px;           /* Spazio sotto la label */
-    font-weight: 600;             /* Peso del font */
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: 600;
   }
 
   .form-group input {
-    width: 100%;                  /* Input piena larghezza */
-    margin-bottom: 10px;          /* Spazio sotto input */
+    width: 100%;
+    margin-bottom: 10px;
   }
 
-  .username-group, .old-password-group {
-    display: flex;                /* Flex container */
-    flex-direction: column;       /* Colonna */
-    align-items: anchor-center;   /* (Stesso valore non valido) */
-    width: 100%;                  /* Larghezza piena */
+.username-group, .old-password-group {
+    display: flex;
+    flex-direction: column;
+    align-items: anchor-center;
+    width: 100%;
   }
 
   .username-group label, .old-password-group label {
-    width: 100%;                  /* Label larghezza piena */
-    text-align: left;             /* Testo a sinistra */
-    margin-bottom: 5px;           /* Spazio sotto */
-    font-weight: 600;             /* Peso font */
+    width: 100%;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: 600;
   }
 
-  .username-group input, .old-password-group input {
-    width: 100%;                  /* Input larga */
-    margin-bottom: 10px;          /* Spazio sotto */
+   .username-group input, .old-password-group input {
+    width: 100%;
+    margin-bottom: 10px;
   }
 
   #changeUsernameBtn,
   #verifyPasswordBtn,
   button[type="submit"] {
-    width: 100%;                  /* Pulsanti a tutta larghezza su mobile */
+    width: 100%;
   }
 
   #barra {
-    display: flex;                /* Flex container */
-    justify-content: center;      /* Centra contenuto orizzontalmente */
-    align-items: center;          /* Centra verticalmente */
-    position: relative;           /* Posizione relativa */
-    margin-bottom: 20px;          /* Spazio sotto la barra */
-    background: #000000;          /* Sfondo nero */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    background: #000000;
   }
 
   #barra h3 {
-    margin: 0 auto;               /* Margine orizzontale automatico (centratura) */
-    color: var(--accent-color);  /* Colore testo variabile */
-    font-size: 1.4rem;            /* Dimensione testo */
-    text-align: center;           /* Testo centrato */
+    margin: 0 auto;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    text-align: center;
   }
 
   #profilePopup {
-    max-height: 90vh;             /* Altezza massima 90% viewport height */
-    overflow-y: auto;             /* Scroll verticale automatico se contenuto troppo alto */
-    width: 95vw;                  /* Larghezza 95% viewport width */
-    padding: 25px 20px;           /* Padding interno */
+    height: calc(100%-60px);
+    overflow-y: auto;
+    width: 100%;
+    padding: 25px 20px;
+    top:60px;
+    left:0;
+    position:fixed;
   }
 }
 
-@media (min-width: 601px) and (orientation: landscape) {
+  @media (min-width: 601px) and (orientation: landscape) {
   form {
-    display: flex;                /* Flex container */
-    flex-direction: column;       /* Colonna */
-    gap: 10px;                   /* Spaziatura minore tra elementi */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .form-group,
   .username-group,
   .old-password-group {
-    display: flex;                /* Flex container */
-    flex-direction: row;          /* In fila */
-    align-items: center;          /* Allineamento verticale al centro */
-    width: 100%;                  /* Larghezza piena */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
   }
 
   .form-group label,
   .username-group label,
   .old-password-group label {
-    font-weight: 600;             /* Peso del font */
-    width: 25%;                  /* Label occupa il 25% della larghezza */
-    text-align: left;             /* Testo a sinistra */
+    font-weight: 600;
+    width: 25%;
+    text-align: left;
   }
 
   .form-group input,
   .username-group input,
   .old-password-group input {
-    width: 100%;                  /* Input larga */
-    margin-bottom: 0px;           /* Nessun margine sotto */
+    width: 100%;
+    margin-bottom: 0px;
   }
 
   #changeUsernameBtn,
-  #verifyPasswordBtn {
-    width: 30%;                   /* Pulsanti più stretti */
-    margin-top: 0;                /* Nessun margine sopra */
+  #verifyPasswordBtn{
+    width: 30%;
+    margin-top: 0;
   }
-
+   
   button[type="submit"] {
-    width: 100%;                  /* Pulsante submit larga */
+    width: 100%;
   }
-
+  
   #profilePopup {
-    max-height: 80vh;             /* Altezza massima ridotta */
-    overflow-y: auto;             /* Scroll verticale */
-    -webkit-overflow-scrolling: touch; /* Scroll fluido su iOS */
-    width: 90vw;                  /* Larghezza minore rispetto a mobile */
-    padding: 25px 20px;           /* Padding */
+    max-height: 80vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* abilitazione smooth scroll su iOS */
+    width: 90vw;
+    padding: 25px 20px;
   }
 
   html, body {
-    height: 90vh;                 /* Altezza massima viewport */
-    overflow: auto;               /* Abilita scroll se necessario */
+    height: 90vh;
+    overflow: auto;
   }
-}
