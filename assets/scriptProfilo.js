@@ -93,18 +93,23 @@ auth.onAuthStateChanged(async (user) => {
   try {
     const doc = await db.collection("utenti").doc(user.uid).get();
     if (doc.exists) {
-      const username = doc.data().username || "";
-      usernameField.value = username;
+  const username = doc.data().username || "";
+  usernameField.value = username;
 
-      // Icona utente
-      if (userIcon) {
-        userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
-      }
+  // Imposta anche displayName se assente o diverso
+  if (!user.displayName || user.displayName !== username) {
+    await user.updateProfile({ displayName: username });
+  }
 
-      // Nome visualizzato
-      if (userName) {
-        userName.textContent = user.displayName || username || "Utente";
-      }
+  // Icona utente
+  if (userIcon) {
+    userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
+  }
+
+  // Nome visualizzato
+  if (userName) {
+    userName.textContent = username || "Utente";
+  }
     } else {
       if (userIcon) userIcon.textContent = 'U';
       if (userName) userName.textContent = "Utente";
@@ -124,6 +129,7 @@ changeUsernameBtn.addEventListener("click", async () => {
 
   try {
     await db.collection("utenti").doc(currentUser.uid).update({ username: newUsername });
+await currentUser.updateProfile({ displayName: newUsername });
     showSuccess("Username aggiornato!");
     if (userIcon) userIcon.textContent = newUsername.charAt(0).toUpperCase();
     if (userName) userName.textContent = newUsername;
