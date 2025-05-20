@@ -214,16 +214,6 @@ input[type="checkbox"][role="switch"]:checked::before {
       user-select: none;
     }
 
- 
-
-    /* ===== FORM PROFILO ===== */
-    form {
-      display: flex;
-      flex-direction: column;
-      grid-template-columns: 100px 1fr;
-      gap: 12px 10px;
-    }
-
     .form-group,
     .username-group,
     .old-password-group {
@@ -359,11 +349,8 @@ input[type="checkbox"][role="switch"]:checked::before {
     }
 
 @media (max-width: 600px) {
-  /* Layout form */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+  
+  body{
     width: 90%;
   }
 
