@@ -284,7 +284,7 @@ editProfileBtn.addEventListener('click', (e) => {
     e.preventDefault();
     return;
   }
-  openProfilePopup();
+  window.location.href = 'profilo.html';
 });
 
 changeUsernameBtn.addEventListener('click', async () => {
