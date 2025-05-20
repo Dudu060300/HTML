@@ -158,26 +158,27 @@ function loadUserProfile() {
 }
 
 // --- Verify old password before allowing password change ---
-verifyPasswordBtn.addEventListener('click', () => {
-  clearMessages();
-  const oldPass = oldPasswordInput.value.trim();
-  if (!oldPass) {
-    showError('Inserisci la vecchia password.');
-    return;
-  }
+verifyPasswordBtn.addEventListener("click", async () => {
+  const oldPassword = oldPasswordInput.value;
+  const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, oldPassword);
 
-  verifyPasswordBtn.disabled = true;
-  const user = auth.currentUser;
-  if (!user) {
-    showError('Utente non autenticato.');
-    verifyPasswordBtn.disabled = false;
-    return;
-  }
+  try {
+    await currentUser.reauthenticateWithCredential(credential);
 
-  const credential = firebase.auth.EmailAuthProvider.credential(
-    user.email,
-    oldPass
-  );
+    // Nascondi il gruppo della vecchia password
+    document.querySelector(".old-password-group").classList.add("hidden");
+
+    // Mostra i campi per la nuova password
+    newPasswordLabel.classList.remove("hidden");
+    newPasswordInput.classList.remove("hidden");
+    confirmPasswordLabel.classList.remove("hidden");
+    confirmPasswordInput.classList.remove("hidden");
+
+    showSuccess("Verifica riuscita. Inserisci la nuova password.");
+  } catch (error) {
+    showError("Password errata.");
+  }
+});
 
   user.reauthenticateWithCredential(credential)
     .then(() => {
