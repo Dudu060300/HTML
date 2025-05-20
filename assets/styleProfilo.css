@@ -413,7 +413,7 @@ input[type="checkbox"][role="switch"]:checked::before {
   }
 
 .username-group button {
-margin- botton: 10px;
+margin-bottom: 10px;
 }
 
   #barra {
@@ -422,7 +422,7 @@ margin- botton: 10px;
     align-items: center;
     position: relative;
     margin-bottom: 20px;
-    margin-top: 10px;
+    margin-top: 20px;
     background: #000000;
   }
 
