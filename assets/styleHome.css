@@ -496,6 +496,7 @@ input[type="checkbox"][role="switch"]:checked::before {
     align-items: center;
     position: relative;
     margin-bottom: 20px;
+    margin-top: 10px;
     background: #000000;
   }
 
