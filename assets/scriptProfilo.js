@@ -146,65 +146,100 @@ await currentUser.updateProfile({ displayName: newUsername });
 });
 
 // Verifica vecchia password
-verifyPasswordBtn.addEventListener("click", async () => {
-  const oldPassword = oldPasswordInput.value;
-  const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, oldPassword);
-
-  try {
-    await currentUser.reauthenticateWithCredential(credential);
-
-    // Nascondi il gruppo della vecchia password
-    document.querySelector(".old-password-group").classList.add("hidden");
-
-    // Mostra i campi per la nuova password
-    newPasswordLabel.classList.remove("hidden");
-    newPasswordInput.classList.remove("hidden");
-    confirmPasswordLabel.classList.remove("hidden");
-    confirmPasswordInput.classList.remove("hidden");
-
-    showSuccess("Verifica riuscita. Inserisci la nuova password.");
-  } catch (error) {
-    showError("Password errata.");
+verifyPasswordBtn.addEventListener('click', () => {
+  clearMessages();
+  const oldPass = oldPasswordInput.value.trim();
+  if (!oldPass) {
+    showError('Inserisci la vecchia password.');
+    return;
   }
+
+  verifyPasswordBtn.disabled = true;
+  const user = auth.currentUser;
+  if (!user) {
+    showError('Utente non autenticato.');
+    verifyPasswordBtn.disabled = false;
+    return;
+  }
+
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email,
+    oldPass
+  );
+
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      showSuccess('Password vecchia verificata. Inserisci la nuova password.');
+      oldPasswordInput.closest('.old-password-group').classList.add('hidden');
+      document.getElementById('oldPasswordLabel').classList.add('hidden');
+      setTimeout(() => {
+        clearMessages();
+      }, 2000);
+      newPasswordInput.classList.remove('hidden');
+      confirmPasswordInput.classList.remove('hidden');
+      document.getElementById('newPasswordLabel').classList.remove('hidden');
+      document.getElementById('confirmPasswordLabel').classList.remove('hidden');
+    })
+    .catch(() => {
+      showError('Password errata. Riprova.');
+    })
+    .finally(() => {
+      verifyPasswordBtn.disabled = false;
+      oldPasswordInput.value = '';
+    });
 });
 
-// Cambio password
-profileForm.addEventListener("submit", async (e) => {
+// --- Save profile changes (username + password) ---
+profileForm.addEventListener('submit', async (e) => {
   e.preventDefault();
+  clearMessages();
+
+  const user = auth.currentUser;
+  if (!user) {
+    showError('Utente non autenticato.');
+    return;
+  }
+  const newUsername = usernameInput.value.trim();
   const newPassword = newPasswordInput.value.trim();
   const confirmPassword = confirmPasswordInput.value.trim();
+  const usernameChanged = newUsername && newUsername !== user.displayName;
+  const passwordChangeRequested = !newPasswordInput.classList.contains('hidden');
 
-  if (newPasswordInput.classList.contains("hidden")) {
-    showError("Verifica la password corrente prima.");
+  if (!passwordChangeRequested && !usernameChanged) {
+    showError('Nessuna modifica da salvare.');
     return;
   }
 
-  if (!newPassword || !confirmPassword) {
-    showError("Compila entrambi i campi della nuova password.");
+  if (usernameChanged && !passwordChangeRequested) {
+    showError('Cliccare su Cambia Username.');
     return;
   }
 
-  if (newPassword !== confirmPassword) {
-    showError("Le password non coincidono.");
-    return;
+  if (passwordChangeRequested) {
+    if (newPassword.length < 6) {
+      showError('La nuova password deve contenere almeno 6 caratteri.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      showError('Le password non corrispondono.');
+      return;
+    }
+    try {
+      await user.updatePassword(newPassword);
+      showSuccess('Password aggiornata con successo.');
+    } catch (err) {
+      if (err.code === 'auth/requires-recent-login') {
+        showError('Devi eseguire nuovamente il login prima di cambiare la password.');
+      } else {
+        showError('Errore durante l\'aggiornamento della password: ' + err.message);
+      }
+      return;
+    }
   }
 
-  try {
-    await currentUser.updatePassword(newPassword);
-    showSuccess("Password aggiornata con successo!");
-
-    // Reset campi e nascondi
-    oldPasswordInput.value = "";
-    newPasswordInput.value = "";
-    confirmPasswordInput.value = "";
-
-    newPasswordLabel.classList.add("hidden");
-    newPasswordInput.classList.add("hidden");
-    confirmPasswordLabel.classList.add("hidden");
-    confirmPasswordInput.classList.add("hidden");
-  } catch (error) {
-    showError("Errore durante l'aggiornamento della password.");
-  }
+  setTimeout(() => {
+    closeProfilePopup();
+  }, 1000);
 });
 
 // Mostra messaggio di errore
