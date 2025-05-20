@@ -450,7 +450,6 @@ input[type="checkbox"][role="switch"]:checked::before {
     flex-direction: column;
     align-items: anchor-center;
     width: 100%;
-    gap: 5px;
   }
 
   .form-group label {
@@ -470,6 +469,7 @@ input[type="checkbox"][role="switch"]:checked::before {
     flex-direction: column;
     align-items: anchor-center;
     width: 100%;
+    gap: 5px;
   }
 
   .username-group label, .old-password-group label {
