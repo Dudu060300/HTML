@@ -7,107 +7,154 @@ const firebaseConfig = {
   appId: "1:771370443646:web:5dd712f9e03448ebda2463"
 };
 
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-    const emailField = document.getElementById("emailInput");
-    const usernameField = document.getElementById("usernameInput");
-    const changeUsernameBtn = document.getElementById("changeUsernameBtn");
+// Campi del DOM
+const emailField = document.getElementById("emailInput");
+const usernameField = document.getElementById("usernameInput");
+const changeUsernameBtn = document.getElementById("changeUsernameBtn");
 
-    const oldPasswordInput = document.getElementById("oldPassword");
-    const verifyPasswordBtn = document.getElementById("verifyPasswordBtn");
-    const newPasswordGroup = document.getElementById("newPasswordGroup");
-    const newPasswordInput = document.getElementById("newPassword");
+const oldPasswordInput = document.getElementById("oldPasswordInput");
+const verifyPasswordBtn = document.getElementById("verifyPasswordBtn");
+const newPasswordInput = document.getElementById("newPasswordInput");
+const confirmPasswordInput = document.getElementById("confirmPasswordInput");
 
-    const errorMsg = document.getElementById("errorMsg");
-    const successMsg = document.getElementById("successMsg");
+const newPasswordLabel = document.getElementById("newPasswordLabel");
+const confirmPasswordLabel = document.getElementById("confirmPasswordLabel");
 
-    const profileForm = document.getElementById("profileForm");
+const errorMsg = document.getElementById("errorMsg");
+const successMsg = document.getElementById("successMsg");
 
-    let currentUser;
+const profileForm = document.getElementById("profileForm");
 
-    auth.onAuthStateChanged(async (user) => {
+const userIcon = document.getElementById("userIcon");
+const userName = document.getElementById("userName");
+
+let currentUser;
+
+// Verifica autenticazione e carica dati utente
+auth.onAuthStateChanged(async (user) => {
   if (!user) {
     window.location.href = "login.html";
     return;
   }
-  
+
   currentUser = user;
   emailField.value = user.email;
 
-  // Carica username da Firestore
-  const doc = await db.collection("utenti").doc(user.uid).get();
-  if (doc.exists) {
-    const username = doc.data().username || "";
-    usernameField.value = username;
+  try {
+    const doc = await db.collection("utenti").doc(user.uid).get();
+    if (doc.exists) {
+      const username = doc.data().username || "";
+      usernameField.value = username;
 
-    // Aggiorna icona utente con l'iniziale dell'username, se disponibile
-    if (userIcon) {
-      userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
+      // Icona utente
+      if (userIcon) {
+        userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
+      }
+
+      // Nome visualizzato
+      if (userName) {
+        userName.textContent = user.displayName || username || "Utente";
+      }
+    } else {
+      if (userIcon) userIcon.textContent = 'U';
+      if (userName) userName.textContent = "Utente";
     }
-  } else {
-    // Nessun username salvato, mostra 'U'
-    if (userIcon) {
-      userIcon.textContent = 'U';
-    }
+  } catch (error) {
+    showError("Errore nel recupero dati utente.");
   }
 });
 
-    changeUsernameBtn.addEventListener("click", async () => {
-      const newUsername = usernameField.value.trim();
-      if (!newUsername) {
-        showError("Inserisci un username valido.");
-        return;
-      }
+// Cambio username
+changeUsernameBtn.addEventListener("click", async () => {
+  const newUsername = usernameField.value.trim();
+  if (!newUsername) {
+    showError("Inserisci un username valido.");
+    return;
+  }
 
-      try {
-        await db.collection("utenti").doc(currentUser.uid).update({ username: newUsername });
-        showSuccess("Username aggiornato!");
-      } catch (error) {
-        showError("Errore durante il salvataggio dell'username.");
-      }
-    });
+  try {
+    await db.collection("utenti").doc(currentUser.uid).update({ username: newUsername });
+    showSuccess("Username aggiornato!");
+    if (userIcon) userIcon.textContent = newUsername.charAt(0).toUpperCase();
+    if (userName) userName.textContent = newUsername;
+  } catch (error) {
+    showError("Errore durante il salvataggio dell'username.");
+  }
+});
 
-    verifyPasswordBtn.addEventListener("click", async () => {
-      const oldPassword = oldPasswordInput.value;
-      const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, oldPassword);
+// Verifica vecchia password
+verifyPasswordBtn.addEventListener("click", async () => {
+  const oldPassword = oldPasswordInput.value;
+  const credential = firebase.auth.EmailAuthProvider.credential(currentUser.email, oldPassword);
 
-      try {
-        await currentUser.reauthenticateWithCredential(credential);
-        newPasswordGroup.classList.remove("hidden");
-        showSuccess("Verifica riuscita. Inserisci la nuova password.");
-      } catch (error) {
-        showError("Password errata.");
-      }
-    });
+  try {
+    await currentUser.reauthenticateWithCredential(credential);
 
-    profileForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const newPassword = newPasswordInput.value.trim();
-      if (newPasswordGroup.classList.contains("hidden") || newPassword === "") {
-        return;
-      }
+    // Mostra campi nuova password
+    newPasswordLabel.classList.remove("hidden");
+    newPasswordInput.classList.remove("hidden");
+    confirmPasswordLabel.classList.remove("hidden");
+    confirmPasswordInput.classList.remove("hidden");
 
-      try {
-        await currentUser.updatePassword(newPassword);
-        showSuccess("Password aggiornata con successo!");
-        oldPasswordInput.value = "";
-        newPasswordInput.value = "";
-        newPasswordGroup.classList.add("hidden");
-      } catch (error) {
-        showError("Errore durante l'aggiornamento della password.");
-      }
-    });
+    showSuccess("Verifica riuscita. Inserisci la nuova password.");
+  } catch (error) {
+    showError("Password errata.");
+  }
+});
 
-    function showError(message) {
-      errorMsg.textContent = message;
-      errorMsg.style.color = "red";
-      successMsg.textContent = "";
-    }
+// Cambio password
+profileForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const newPassword = newPasswordInput.value.trim();
+  const confirmPassword = confirmPasswordInput.value.trim();
 
-    function showSuccess(message) {
-      successMsg.textContent = message;
-      successMsg.style.color = "green";
-      errorMsg.textContent = "";
-    }
+  if (newPasswordInput.classList.contains("hidden")) {
+    showError("Verifica la password corrente prima.");
+    return;
+  }
+
+  if (!newPassword || !confirmPassword) {
+    showError("Compila entrambi i campi della nuova password.");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    showError("Le password non coincidono.");
+    return;
+  }
+
+  try {
+    await currentUser.updatePassword(newPassword);
+    showSuccess("Password aggiornata con successo!");
+
+    // Reset campi e nascondi
+    oldPasswordInput.value = "";
+    newPasswordInput.value = "";
+    confirmPasswordInput.value = "";
+
+    newPasswordLabel.classList.add("hidden");
+    newPasswordInput.classList.add("hidden");
+    confirmPasswordLabel.classList.add("hidden");
+    confirmPasswordInput.classList.add("hidden");
+  } catch (error) {
+    showError("Errore durante l'aggiornamento della password.");
+  }
+});
+
+// Mostra messaggio di errore
+function showError(message) {
+  errorMsg.textContent = message;
+  errorMsg.style.color = "red";
+  successMsg.textContent = "";
+}
+
+// Mostra messaggio di successo
+function showSuccess(message) {
+  successMsg.textContent = message;
+  successMsg.style.color = "green";
+  errorMsg.textContent = "";
+}
