@@ -349,10 +349,6 @@ input[type="checkbox"][role="switch"]:checked::before {
     }
 
 @media (max-width: 600px) {
-  
-  body{
-    width: 90%;
-  }
 
   .form-group {
     display: flex;
