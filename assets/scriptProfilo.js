@@ -153,6 +153,16 @@ verifyPasswordBtn.addEventListener("click", async () => {
   try {
     await currentUser.reauthenticateWithCredential(credential);
 
+// DISATTIVA vecchio campo password
+    oldPasswordInput.disabled = true;
+    oldPasswordInput.value = '';
+    
+    // NASCONDI gruppo vecchia password
+    const oldPasswordGroup = oldPasswordInput.closest('.form-group');
+    if (oldPasswordGroup) {
+      oldPasswordGroup.style.display = 'none';
+    
+
     // Mostra campi nuova password
     newPasswordLabel.classList.remove("hidden");
     newPasswordInput.classList.remove("hidden");
