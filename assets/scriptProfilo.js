@@ -12,6 +12,10 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // Campi del DOM
+const userMenu = document.getElementById('userMenu');
+const logoutBtn = document.getElementById('logout');
+const editProfileBtn = document.getElementById('editProfile');
+
 const emailField = document.getElementById("emailInput");
 const usernameField = document.getElementById("usernameInput");
 const changeUsernameBtn = document.getElementById("changeUsernameBtn");
@@ -33,6 +37,48 @@ const userIcon = document.getElementById("userIcon");
 const userName = document.getElementById("userName");
 
 let currentUser;
+
+// --- Dropdown menu accessibility and toggle ---
+userMenu.addEventListener('click', () => {
+  const expanded = userMenu.getAttribute('aria-expanded') === 'true';
+  userMenu.setAttribute('aria-expanded', String(!expanded));
+  userMenu.classList.toggle('open');
+  // Aggiorna il nome utente ogni volta che si apre il menu
+  if (!expanded) { // solo se il menu sta per aprirsi
+    const user = auth.currentUser;
+    if (user && userName) {
+      userName.textContent = user.displayName || 'Utente';
+    }
+}
+});
+
+document.addEventListener('click', (e) => {
+  if (!userMenu.contains(e.target)) {
+    userMenu.setAttribute('aria-expanded', 'false');
+    userMenu.classList.remove('open');
+  }
+});
+
+userMenu.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    const expanded = userMenu.getAttribute('aria-expanded') === 'true';
+    userMenu.setAttribute('aria-expanded', String(!expanded));
+    userMenu.classList.toggle('open');
+  } else if (e.key === 'Escape') {
+    userMenu.setAttribute('aria-expanded', 'false');
+    userMenu.classList.remove('open');
+    userMenu.focus();
+  }
+});
+
+// --- Logout ---
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    location.href = 'index.html';
+  });
+});
 
 // Verifica autenticazione e carica dati utente
 auth.onAuthStateChanged(async (user) => {
