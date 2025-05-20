@@ -28,19 +28,31 @@ const firebaseConfig = {
     let currentUser;
 
     auth.onAuthStateChanged(async (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
-      currentUser = user;
-      emailField.value = user.email;
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  currentUser = user;
+  emailField.value = user.email;
 
-      // Carica username da Firestore
-      const doc = await db.collection("utenti").doc(user.uid).get();
-      if (doc.exists) {
-        usernameField.value = doc.data().username || "";
-      }
-    });
+  // Carica username da Firestore
+  const doc = await db.collection("utenti").doc(user.uid).get();
+  if (doc.exists) {
+    const username = doc.data().username || "";
+    usernameField.value = username;
+
+    // Aggiorna icona utente con l'iniziale dell'username, se disponibile
+    if (userIcon) {
+      userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
+    }
+  } else {
+    // Nessun username salvato, mostra 'U'
+    if (userIcon) {
+      userIcon.textContent = 'U';
+    }
+  }
+});
 
     changeUsernameBtn.addEventListener("click", async () => {
       const newUsername = usernameField.value.trim();
