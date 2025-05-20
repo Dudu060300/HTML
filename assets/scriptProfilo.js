@@ -12,7 +12,7 @@ const firebaseConfig = {
     const db = firebase.firestore();
 
     const emailField = document.getElementById("emailInput");
-    const usernameField = document.getElementById("username");
+    const usernameField = document.getElementById("usernameInput");
     const changeUsernameBtn = document.getElementById("changeUsernameBtn");
 
     const oldPasswordInput = document.getElementById("oldPassword");
