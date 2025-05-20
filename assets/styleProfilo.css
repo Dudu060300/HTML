@@ -351,7 +351,7 @@ input[type="checkbox"][role="switch"]:checked::before {
 @media (max-width: 600px) {
   
   .pagina{
-    padding: 20px;
+    margin: 20px;
   }
 
   .form-group {
