@@ -90,29 +90,36 @@ auth.onAuthStateChanged(async (user) => {
   currentUser = user;
   emailField.value = user.email;
 
+  // Mostra subito qualcosa
+  if (userIcon) {
+    const initial = user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U';
+    userIcon.textContent = initial;
+  }
+
+  if (userName) {
+    userName.textContent = user.displayName || "Utente";
+  }
+
+  // Poi prova a caricare username da Firestore
   try {
     const doc = await db.collection("utenti").doc(user.uid).get();
     if (doc.exists) {
-  const username = doc.data().username || "";
-  usernameField.value = username;
+      const username = doc.data().username || "";
 
-  // Imposta anche displayName se assente o diverso
-  if (!user.displayName || user.displayName !== username) {
-    await user.updateProfile({ displayName: username });
-  }
+      usernameField.value = username;
 
-  // Icona utente
-  if (userIcon) {
-    userIcon.textContent = username ? username.charAt(0).toUpperCase() : 'U';
-  }
+      // Sincronizza se necessario
+      if (!user.displayName || user.displayName !== username) {
+        await user.updateProfile({ displayName: username });
+      }
 
-  // Nome visualizzato
-  if (userName) {
-    userName.textContent = username || "Utente";
-  }
-    } else {
-      if (userIcon) userIcon.textContent = 'U';
-      if (userName) userName.textContent = "Utente";
+      if (userIcon) {
+        userIcon.textContent = username.charAt(0).toUpperCase();
+      }
+
+      if (userName) {
+        userName.textContent = username;
+      }
     }
   } catch (error) {
     showError("Errore nel recupero dati utente.");
