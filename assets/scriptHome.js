@@ -99,11 +99,6 @@ function closeProfilePopup() {
   confirmPasswordInput.value = '';
 }
 
-editProfileBtn.addEventListener('click', (e) => {
-  e.preventDefault();
-  openProfilePopup();
-});
-
 closePopupBtn.addEventListener('click', closeProfilePopup);
 overlay.addEventListener('click', closeProfilePopup);
 
