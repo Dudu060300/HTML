@@ -14,6 +14,7 @@
   --text-muted: #bbb;
   --input-bg-readonly: #444;
   --transition-speed: 0.3s;
+  --msg-bg: #000000;
 }
 
 body.dark {
@@ -24,11 +25,16 @@ body.dark {
   --nav-bg: #ffffff;
   --nav-text: #000000;
   --text-color: #ffffff;
+  --msg-bg: #ffffff;
 }
 
     * {
       box-sizing: border-box;
     }
+
+.profileForm{
+  margin: 20px;
+}
 
 /* Toggle switch stile base */
 input[type="checkbox"][role="switch"] {
@@ -271,7 +277,7 @@ input[type="checkbox"][role="switch"]:checked::before {
     #errorMsg.visible {
       display: block;
       color: var(--error-color);
-      background: rgba(255, 76, 76, 0.1);
+      background: var(--msg-bg);
       margin-top: 6px;
       transition: opacity var(--transition-speed);
     }
@@ -281,7 +287,7 @@ input[type="checkbox"][role="switch"]:checked::before {
       color: var(--success-color);
       text-align: center;
       margin-top: 8px;
-      background: rgba(76, 255, 107, 0.15);
+      background: var(--msg-bg);
       transition: opacity var(--transition-speed);
     }
 
