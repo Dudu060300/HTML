@@ -14,11 +14,6 @@ const db = firebase.firestore();
 const userMenu = document.getElementById('userMenu');
 const logoutBtn = document.getElementById('logout');
 const editProfileBtn = document.getElementById('editProfile');
-
-const overlay = document.getElementById('overlay');
-const profilePopup = document.getElementById('profilePopup');
-const closePopupBtn = document.getElementById('closePopupBtn');
-
 const emailInput = document.getElementById('emailInput');
 const usernameInput = document.getElementById('usernameInput');
 const oldPasswordInput = document.getElementById('oldPasswordInput');
@@ -28,9 +23,7 @@ const confirmPasswordInput = document.getElementById('confirmPasswordInput');
 const errorMsg = document.getElementById('errorMsg');
 const successMsg = document.getElementById('successMsg');
 const profileForm = document.getElementById('profileForm');
-
 const changeUsernameBtn = document.getElementById('changeUsernameBtn');
-
 const userIcon = document.getElementById('userIcon');
 const userName = document.getElementById('userName');
 
@@ -76,38 +69,6 @@ logoutBtn.addEventListener('click', (e) => {
   });
 });
 
-// --- Open/Close popup functions ---
-function openProfilePopup() {
-  overlay.classList.add('active');
-  profilePopup.classList.add('show');
-  profilePopup.classList.remove('hidden');
-  profilePopup.focus();
-  clearMessages();
-  resetPasswordFields();
-  loadUserProfile();
-}
-
-function closeProfilePopup() {
-  overlay.classList.remove('active');
-  profilePopup.classList.remove('show');
-  profilePopup.classList.add('hidden');
-  clearMessages();
-  resetPasswordFields();
-  usernameInput.value = '';
-  oldPasswordInput.value = '';
-  newPasswordInput.value = '';
-  confirmPasswordInput.value = '';
-}
-
-closePopupBtn.addEventListener('click', closeProfilePopup);
-overlay.addEventListener('click', closeProfilePopup);
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && profilePopup.classList.contains('show')) {
-    closeProfilePopup();
-  }
-});
-
 // --- Utility functions ---
 function showError(message) {
   errorMsg.textContent = message;
@@ -135,15 +96,15 @@ function resetPasswordFields() {
   newPasswordInput.value = '';
   confirmPasswordInput.value = '';
 
-  oldPasswordInput.closest('.old-password-group').classList.remove('hidden');
+oldPasswordInput.closest('.old-password-group').classList.remove('hidden');
   document.getElementById('oldPasswordLabel').classList.remove('hidden');
 
-  newPasswordInput.classList.add('hidden');
+newPasswordInput.classList.add('hidden');
   confirmPasswordInput.classList.add('hidden');
   document.getElementById('newPasswordLabel').classList.add('hidden');
   document.getElementById('confirmPasswordLabel').classList.add('hidden');
 
-  verifyPasswordBtn.disabled = false;
+verifyPasswordBtn.disabled = false;
 }
 
 // --- Load profile from Firebase Auth ---
@@ -178,7 +139,6 @@ verifyPasswordBtn.addEventListener('click', () => {
     user.email,
     oldPass
   );
-
   user.reauthenticateWithCredential(credential)
     .then(() => {
       showSuccess('Password vecchia verificata. Inserisci la nuova password.');
@@ -273,7 +233,7 @@ auth.onAuthStateChanged(user => {
   }
 });
 
-// Blocca apertura popup se il bottone non è visibile o disabilitato
+// Blocca apertura profilo.html se il bottone non è visibile o disabilitato
 editProfileBtn.addEventListener('click', (e) => {
   if (editProfileBtn.style.display === 'none' || editProfileBtn.disabled) {
     e.preventDefault();
@@ -320,7 +280,6 @@ changeUsernameBtn.addEventListener('click', async () => {
     closeProfilePopup();
   }, 1000);
 });
-
 
   // Funzioni globali per tema
 function loadThemeSetting() {
