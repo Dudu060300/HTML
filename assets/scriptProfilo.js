@@ -97,6 +97,7 @@ verifyPasswordBtn.addEventListener("click", async () => {
     await user.reauthenticateWithCredential(credential);
     showSuccess("Password verificata. Ora puoi cambiarla.");
     passwordVerified = true;
+    clearMessages();
 
     // Nascondi il gruppo della vecchia password
     document.querySelector(".old-password-group").parentElement.style.display = "none";
@@ -143,10 +144,21 @@ profileForm.addEventListener("submit", async (e) => {
 // Mostra messaggi
 function showError(message) {
   errorMsg.textContent = message;
-  successMsg.textContent = "";
+  errorMsg.classList.add('visible');
+  successMsg.textContent = '';
+  successMsg.classList.remove('visible');
 }
 
 function showSuccess(message) {
   successMsg.textContent = message;
-  errorMsg.textContent = "";
+  successMsg.classList.add('visible');
+  errorMsg.textContent = '';
+  errorMsg.classList.remove('visible');
+}
+
+function clearMessages() {
+  errorMsg.textContent = '';
+  errorMsg.classList.remove('visible');
+  successMsg.textContent = '';
+  successMsg.classList.remove('visible');
 }
