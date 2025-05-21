@@ -314,10 +314,10 @@ input[type="checkbox"][role="switch"]:checked::before {
 
     #verifyPasswordBtn {
       padding: 0 16px;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       height: 40px;
       margin-top: 0;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 600;
       background: var(--accent-color);
       color: #000;
@@ -339,10 +339,10 @@ input[type="checkbox"][role="switch"]:checked::before {
 
     #changeUsernameBtn {
       padding: 0 16px;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       height: 40px;
       margin-top: 0;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: 600;
       background: var(--accent-color);
       color: #000;
