@@ -318,7 +318,7 @@ input[type="checkbox"][role="switch"]:checked::before {
       height: 40px;
       margin-top: 0;
       border-radius: 8px;
-      font-weight: 600;
+      font-weight: 700;
       background: var(--accent-color);
       color: #000;
       transition: background var(--transition-speed);
@@ -343,7 +343,7 @@ input[type="checkbox"][role="switch"]:checked::before {
       height: 40px;
       margin-top: 0;
       border-radius: 8px;
-      font-weight: 600;
+      font-weight: 700;
       background: var(--accent-color);
       color: #000;
       transition: background var(--transition-speed);
