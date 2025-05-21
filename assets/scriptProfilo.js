@@ -30,16 +30,23 @@ const verifyPasswordBtn = document.getElementById("verifyPasswordBtn");
 const changeUsernameBtn = document.getElementById("changeUsernameBtn");
 const profileForm = document.getElementById("profileForm");
 const userNameDisplay = document.getElementById("userName");
+const userMenu = document.getElementById("userMenu");
+const dropdownMenu = document.getElementById("dropdownMenu");
 
 // Stato di verifica password
 let passwordVerified = false;
 
-// Mostra/nasconde menu utente
-document.getElementById("userMenu").addEventListener("click", () => {
-  const menu = document.getElementById("dropdownMenu");
-  const expanded = menu.style.display === "block";
-  menu.style.display = expanded ? "none" : "block";
-  document.getElementById("userMenu").setAttribute("aria-expanded", !expanded);
+userMenu.addEventListener("click", (event) => {
+  event.stopPropagation(); // Previene la chiusura immediata
+  const isOpen = userMenu.classList.contains("open");
+  userMenu.classList.toggle("open");
+  userMenu.setAttribute("aria-expanded", !isOpen);
+});
+
+// Chiudi il menu cliccando fuori
+document.addEventListener("click", () => {
+  userMenu.classList.remove("open");
+  userMenu.setAttribute("aria-expanded", false);
 });
 
 // Recupera dati utente
