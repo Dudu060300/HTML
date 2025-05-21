@@ -97,7 +97,9 @@ verifyPasswordBtn.addEventListener("click", async () => {
     await user.reauthenticateWithCredential(credential);
     showSuccess("Password verificata. Ora puoi cambiarla.");
     passwordVerified = true;
-    clearMessages();
+    setTimeout(() => {
+        clearMessages();
+      }, 2000);
 
     // Nascondi il gruppo della vecchia password
     document.querySelector(".old-password-group").parentElement.style.display = "none";
