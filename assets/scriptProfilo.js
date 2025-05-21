@@ -98,6 +98,9 @@ verifyPasswordBtn.addEventListener("click", async () => {
     showSuccess("Password verificata. Ora puoi cambiarla.");
     passwordVerified = true;
 
+    // Nascondi il gruppo della vecchia password
+    document.querySelector(".old-password-group").parentElement.style.display = "none";
+
     // Mostra i campi per nuova password
     [newPasswordInput, confirmPasswordInput].forEach(el => el.classList.remove("hidden"));
     [newPasswordLabel, confirmPasswordLabel].forEach(el => el.classList.remove("hidden"));
