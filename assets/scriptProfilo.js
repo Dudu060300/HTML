@@ -33,6 +33,9 @@ const userNameDisplay = document.getElementById("userName");
 const userMenu = document.getElementById("userMenu");
 const dropdownMenu = document.getElementById("dropdownMenu");
 
+document.getElementById('logout');
+const editProfileBtn = document.getElementById('editProfile');
+
 // Stato di verifica password
 let passwordVerified = false;
 
@@ -176,3 +179,155 @@ function clearMessages() {
   successMsg.textContent = '';
   successMsg.classList.remove('visible');
 }
+
+logoutBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  auth.signOut().then(() => {
+    location.href = 'index.html';
+  });
+});
+
+// --- Save profile changes (username + password) ---
+profileForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearMessages();
+
+  const user = auth.currentUser;
+  if (!user) {
+    showError('Utente non autenticato.');
+    return;
+  }
+  const newUsername = usernameInput.value.trim();
+  const newPassword = newPasswordInput.value.trim();
+  const confirmPassword = confirmPasswordInput.value.trim();
+  const usernameChanged = newUsername && newUsername !== user.displayName;
+  const passwordChangeRequested = !newPasswordInput.classList.contains('hidden');
+
+  if (!passwordChangeRequested && !usernameChanged) {
+    showError('Nessuna modifica da salvare.');
+    return;
+  }
+
+  if (usernameChanged && !passwordChangeRequested) {
+    showError('Cliccare su Cambia Username.');
+    return;
+  }
+
+  if (passwordChangeRequested) {
+    if (newPassword.length < 6) {
+      showError('La nuova password deve contenere almeno 6 caratteri.');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      showError('Le password non corrispondono.');
+      return;
+    }
+    try {
+      await user.updatePassword(newPassword);
+      showSuccess('Password aggiornata con successo.');
+    } catch (err) {
+      if (err.code === 'auth/requires-recent-login') {
+        showError('Devi eseguire nuovamente il login prima di cambiare la password.');
+      } else {
+        showError('Errore durante l\'aggiornamento della password: ' + err.message);
+      }
+      return;
+    }
+  }
+
+  setTimeout(() => {
+    closeProfilePopup();
+  }, 1000);
+});
+
+ // Funzioni globali per tema
+function loadThemeSetting() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.body.classList.toggle('dark', savedTheme === 'dark'); // aggiunto
+    const themeSelect = document.getElementById('themeSelect');
+    if (themeSelect) themeSelect.value = savedTheme;
+  }
+}
+
+function saveThemeSetting(theme) {
+  localStorage.setItem('theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.classList.toggle('dark', theme === 'dark'); // aggiunto
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const settingsBtn = document.getElementById('openSettings');
+  const settingsPopup = document.getElementById('settingsPopup');
+  const settingsOverlay = document.getElementById('settingsOverlay');
+  const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+  const themeSelect = document.getElementById('themeSelect');
+
+  if (settingsBtn && settingsPopup && settingsOverlay) {
+    settingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      loadThemeSetting();
+      settingsOverlay.classList.remove('hidden');
+      settingsPopup.classList.remove('hidden');
+      settingsPopup.focus();
+    });
+  }
+
+  if (closeSettingsBtn && settingsPopup && settingsOverlay) {
+    closeSettingsBtn.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');
+      settingsPopup.classList.add('hidden');
+    });
+
+    settingsOverlay.addEventListener('click', () => {
+      settingsOverlay.classList.add('hidden');
+      settingsPopup.classList.add('hidden');
+    });
+  }
+
+  if (themeSelect) {
+    themeSelect.addEventListener('change', () => {
+      saveThemeSetting(themeSelect.value);
+    });
+  }
+
+  loadThemeSetting();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const themeToggle = document.getElementById('themeToggle');
+  const themeLabel = document.getElementById('themeLabel');
+
+  // Inizializza toggle in base al tema corrente
+  themeToggle.checked = document.body.classList.contains('dark');
+
+  // Funzione per aggiornare il tema
+  function updateTheme(isDark) {
+    if (isDark) {
+      document.body.classList.add('dark');
+      themeToggle.setAttribute('aria-checked', 'true');
+    } else {
+      document.body.classList.remove('dark');
+      themeToggle.setAttribute('aria-checked', 'false');
+    }
+  }
+
+  // Cambia tema al toggle
+  themeToggle.addEventListener('change', () => {
+    if (themeToggle.checked) {
+      // Attiva dark mode
+      document.body.classList.add('dark');
+      themeLabel.textContent = 'Dark mode attiva';
+      themeToggle.setAttribute('aria-checked', 'true');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      // Attiva light mode
+      document.body.classList.remove('dark');
+      themeLabel.textContent = 'Light mode attiva';
+      themeToggle.setAttribute('aria-checked', 'false');
+      localStorage.setItem('theme', 'light');
+    }
+  });
+});
+
