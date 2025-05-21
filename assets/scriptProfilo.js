@@ -32,7 +32,7 @@ const profileForm = document.getElementById("profileForm");
 const userNameDisplay = document.getElementById("userName");
 const userMenu = document.getElementById("userMenu");
 const dropdownMenu = document.getElementById("dropdownMenu");
-
+const logoutBtn = 
 document.getElementById('logout');
 const editProfileBtn = document.getElementById('editProfile');
 
