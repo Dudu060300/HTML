@@ -256,3 +256,4 @@ function showSuccess(message) {
   successMsg.style.color = "green";
   errorMsg.textContent = "";
 }
+});
