@@ -39,6 +39,10 @@ const editProfileBtn = document.getElementById('editProfile');
 // Stato di verifica password
 let passwordVerified = false;
 
+document.getElementById('backButton').addEventListener('click', () => {
+  window.history.back();
+});
+
 userMenu.addEventListener("click", (event) => {
   event.stopPropagation(); // Previene la chiusura immediata
   const isOpen = userMenu.classList.contains("open");
