@@ -50,9 +50,14 @@ auth.onAuthStateChanged(async user => {
     // Ottieni username da Firestore
     const userDoc = await db.collection("users").doc(user.uid).get();
     if (userDoc.exists) {
-      usernameInput.value = userDoc.data().username || "";
-      userNameDisplay.textContent = userDoc.data().username || "Utente";
-    }
+  const username = userDoc.data().username || "Utente";
+  usernameInput.value = username;
+  userNameDisplay.textContent = username;
+
+  // Mostra l'iniziale nello userIcon
+  const firstLetter = username.charAt(0).toUpperCase();
+  document.getElementById("userIcon").textContent = firstLetter;
+}
   }
 });
 
