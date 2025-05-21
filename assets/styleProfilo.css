@@ -87,6 +87,7 @@ input[type="checkbox"][role="switch"]:checked::before {
   padding: 0.3rem 0.6rem;
   border-radius: 5px;
   transition: background-color 0.2s;
+  align-items: center;
 }
 
 .back-btn:hover {
