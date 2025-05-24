@@ -2,6 +2,8 @@
   --bg-color: #ffffff;
   --text-color: #000000;
   --nav-bg: #000000;
+  --barra-bg: #000000;
+  --barra-color: #00f7ff;
   --nav-text: #ffffff;
   --popup-bg: #000000;
   --popup-color: #ffffff;
@@ -21,6 +23,8 @@ body.dark {
   --popup-color: #000000;
   --bg-color: #000000;
   --nav-bg: #ffffff;
+  --barra-bg: #00f7ff;
+  --barra-color: #000000;
   --nav-text: #000000;
   --text-color: #ffffff;
   --msg-bg: #ffffff;
@@ -186,12 +190,12 @@ nav h1 {
   border-radius: 20px;
   padding: 10px;
   text-align: center;
-  background: var(--nav-bg);
+  background: var(--barra-bg);
 }
 
 #barra h3 {
   margin: 0;
-  color: var(--accent-color);
+  color: var(--barra-color);
   font-size: 1.4rem;
   user-select: none;
 }
