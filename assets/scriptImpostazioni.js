@@ -36,30 +36,32 @@ document.addEventListener('DOMContentLoaded', () => {
     userMenu.setAttribute("aria-expanded", false);
   });
 
-  auth.onAuthStateChanged(async user => {
-    if (user) {
-      try {
-        const userDoc = await db.collection("users").doc(user.uid).get();
-        if (userDoc.exists) {
-          const username = userDoc.data().username || "Utente";
-          userNameDisplay.textContent = username;
-          userIcon.textContent = username.charAt(0).toUpperCase();
-          console.log("Username caricato:", username);
-        } else {
-          console.warn("Documento utente non trovato.");
-          userNameDisplay.textContent = "Utente";
-          userIcon.textContent = "U";
-        }
-      } catch (error) {
-        console.error("Errore recupero username:", error);
-        userNameDisplay.textContent = "Utente";
-        userIcon.textContent = "U";
-      }
+  auth.onAuthStateChanged(user => {
+  if (user) {
+    const providers = user.providerData.map(p => p.providerId);
+    const isSocialLogin = providers.includes('google.com') || providers.includes('apple.com');
+
+    if (isSocialLogin) {
+      editProfileBtn.style.display = 'none';
     } else {
-      userNameDisplay.textContent = "Utente";
-      userIcon.textContent = "U";
+      editProfileBtn.style.display = 'inline-block';
     }
-  });
+
+    if (userName) userName.textContent = user.displayName || 'Utente';
+    if (userIcon) userIcon.textContent = (user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U');
+  } else {
+    location.href = 'index.html';
+  }
+});
+
+// Blocca apertura profilo.html se il bottone non è visibile o disabilitato
+editProfileBtn.addEventListener('click', (e) => {
+  if (editProfileBtn.style.display === 'none' || editProfileBtn.disabled) {
+    e.preventDefault();
+    return;
+  }
+  window.location.href = 'profilo.html';
+});
 
   logoutBtn.addEventListener('click', (e) => {
     e.preventDefault();
