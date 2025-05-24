@@ -18,59 +18,35 @@ const userIcon = document.getElementById('userIcon');
 const userName = document.getElementById('userName');
 
 // --- Dropdown menu accessibility and toggle ---
-const overlay = document.getElementById('overlay');
-
-function toggleOverlay(show) {
-  if (!overlay) return;
-  if (show) overlay.classList.add('visible');
-  else overlay.classList.remove('visible');
-}
-
 userMenu.addEventListener('click', () => {
   const expanded = userMenu.getAttribute('aria-expanded') === 'true';
   userMenu.setAttribute('aria-expanded', String(!expanded));
   userMenu.classList.toggle('open');
-
-  toggleOverlay(!expanded); // mostra overlay se menu si apre
-
-  if (!expanded) {
+  // Aggiorna il nome utente ogni volta che si apre il menu
+  if (!expanded) { // solo se il menu sta per aprirsi
     const user = auth.currentUser;
     if (user && userName) {
       userName.textContent = user.displayName || 'Utente';
     }
-  }
-});
-
-// Nascondi menu e overlay se clicchi fuori
-document.addEventListener('click', (e) => {
-  if (!userMenu.contains(e.target) && overlay && !overlay.contains(e.target)) {
-    userMenu.setAttribute('aria-expanded', 'false');
-    userMenu.classList.remove('open');
-    toggleOverlay(false);
-  }
-});
-
-// Nascondi menu e overlay se clicchi sull’overlay stesso
-if (overlay) {
-  overlay.addEventListener('click', () => {
-    userMenu.setAttribute('aria-expanded', 'false');
-    userMenu.classList.remove('open');
-    toggleOverlay(false);
-  });
 }
+});
 
-// Eventi tastiera (Enter, Space, Escape) già gestiti, ma aggiungi toggle overlay qui:
+document.addEventListener('click', (e) => {
+  if (!userMenu.contains(e.target)) {
+    userMenu.setAttribute('aria-expanded', 'false');
+    userMenu.classList.remove('open');
+  }
+});
+
 userMenu.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     e.preventDefault();
     const expanded = userMenu.getAttribute('aria-expanded') === 'true';
     userMenu.setAttribute('aria-expanded', String(!expanded));
     userMenu.classList.toggle('open');
-    toggleOverlay(!expanded);
   } else if (e.key === 'Escape') {
     userMenu.setAttribute('aria-expanded', 'false');
     userMenu.classList.remove('open');
-    toggleOverlay(false);
     userMenu.focus();
   }
 });
