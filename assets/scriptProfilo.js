@@ -272,21 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     settingsBtn.addEventListener('click', (e) => {
       e.preventDefault();
       loadThemeSetting();
-      settingsOverlay.classList.remove('hidden');
-      settingsPopup.classList.remove('hidden');
-      settingsPopup.focus();
-    });
-  }
-
-  if (closeSettingsBtn && settingsPopup && settingsOverlay) {
-    closeSettingsBtn.addEventListener('click', () => {
-      settingsOverlay.classList.add('hidden');
-      settingsPopup.classList.add('hidden');
-    });
-
-    settingsOverlay.addEventListener('click', () => {
-      settingsOverlay.classList.add('hidden');
-      settingsPopup.classList.add('hidden');
+      window.location.href = 'impostazioni.html';
     });
   }
 
@@ -334,4 +320,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
