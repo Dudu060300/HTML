@@ -72,6 +72,7 @@ nav {
 
 a {
   text-decoration: none;
+  color: var(--nav-text);
 }
 
 nav h1 {
