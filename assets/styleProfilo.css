@@ -70,6 +70,10 @@ nav {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+a {
+  text-decoration: none;
+}
+
 nav h1 {
   position: absolute;
   left: 50%;
@@ -174,9 +178,6 @@ nav h1 {
 /* FORM */
 #profileForm {
   margin: 20px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 #barra {
