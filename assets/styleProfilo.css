@@ -34,6 +34,7 @@ body.dark {
     
     a{
       text-decoration:none;
+      color: var(--nav-text);
     }
 
 #profileForm{
