@@ -320,12 +320,12 @@ button:hover,button:focus {
     position: relative;
     margin-bottom: 20px;
     margin-top: 20px;
-    background: #000000;
+    background: var(--barra-bg);
 }
 
 #barra h3 {
     margin: 0 auto;
-    color: var(--accent-color);
+    color: var(--barra-color);
     font-size: 1.4rem;
     text-align: center;
   }
