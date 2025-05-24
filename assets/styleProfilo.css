@@ -31,6 +31,10 @@ body.dark {
     * {
       box-sizing: border-box;
     }
+    
+    a{
+      text-decoration:none;
+    }
 
 #profileForm{
   margin: 20px;
