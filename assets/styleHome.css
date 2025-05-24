@@ -47,6 +47,20 @@ nav h1 {
   font-size: 1.5rem;
 }
 
+#overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5); /* semi-trasparente nero */
+  z-index: 15; /* sotto la dropdown (che ha z-index 20) */
+  display: none;
+}
+
+#overlay.visible {
+  display: block;
+}
+
 .user-menu {
   position: relative;
   cursor: pointer;
