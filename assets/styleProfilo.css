@@ -179,6 +179,21 @@ nav h1 {
   margin-right: auto;
 }
 
+#barra {
+  margin-bottom: 20px;
+  border-radius: 20px;
+  padding: 10px;
+  text-align: center;
+  background: var(--nav-bg);
+}
+
+#barra h3 {
+  margin: 0;
+  color: var(--accent-color);
+  font-size: 1.4rem;
+  user-select: none;
+}
+
 .form-group,.username-group,.old-password-group {
   display: flex;
   flex-direction: column;
@@ -291,6 +306,23 @@ button:hover,button:focus {
 }
 
 @media (max-width: 600px) {
+
+#barra {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background: #000000;
+}
+
+#barra h3 {
+    margin: 0 auto;
+    color: var(--accent-color);
+    font-size: 1.4rem;
+    text-align: center;
+  }
 
 .form-group {
     display: flex;
