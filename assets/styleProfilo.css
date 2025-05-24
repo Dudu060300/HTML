@@ -242,11 +242,11 @@ input[readonly] {
 button {
   margin-top: 15px;
   padding: 10px 0;
-  background: var(--accent-color);
+  background: var(--barra-bg);
   border: none;
   border-radius: 8px;
   font-weight: 700;
-  color: #000;
+  color: var(--barra-color);
   font-size: 1.1rem;
   cursor: pointer;
   transition: background var(--transition-speed);
@@ -264,8 +264,8 @@ button:hover,button:focus {
   margin-top: 0;
   border-radius: 8px;
   font-weight: 700;
-  background: var(--accent-color);
-  color: #000;
+  background: var(--barra-bg);
+  color: var(--barra-color);
   transition: background var(--transition-speed);
 }
 
