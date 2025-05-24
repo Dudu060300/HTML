@@ -113,6 +113,7 @@ input[type="checkbox"][role="switch"]:checked::before {
   align-items: center;
   justify-content: center;
   height: 100%; /* forza l’altezza per allineamento verticale */
+  color: var(--nav-text);
 }
 
 nav h1 {
